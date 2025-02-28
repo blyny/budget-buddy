@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#btnLogin {
+    width: 100%;
+    padding: 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#btnLogin:hover {
+    background-color: #218838;
+}
+
+#btnSignUpPage, #btnSignUp {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#btnSignUpPage:hover, #btnSignUp:hover  {
+    background-color: #218838;
+}
+.message {
+    margin-top: 15px;
+    color: #28a745;
+}
+
+.error {
+    color: #dc3545;
+}
+
+
+/* FOR DASHBOARD */
+/* ----------------------------------------------------------------*/
+#btnLogout {
+  background-color: #ff4d4d; /* Red color for the button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+#btnLogout:hover {
+  background-color: #ff1a1a; /* Darker red on hover */
+}#btnLogout {
+    background-color: #ff4d4d;
+    /* Red color for the button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+#btnLogout:hover {
+    background-color: #ff1a1a;
+    /* Darker red on hover */
+}
+/* ----------------------------------------------------------------*/
