@@ -1,5 +1,6 @@
 # budget-buddy
-This will be an website/app to track budget
+(https://budget-buddy-b4db6.web.app/)
+
 We will track given user data such as:
 - Income
 - Expenses
