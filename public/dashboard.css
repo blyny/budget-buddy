@@ -219,6 +219,28 @@ main content cause they over lap*/
 
 }
 
+.amount--value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+}
+
+/* Input field styles */
+.amount--input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    display: none;
+    /* Hidden by default */
+}
+
+.amount--input.visible {
+    display: block;
+    /* Show the input field */
+}
+
 .category--card {
     background: rgb(200, 255, 200);
     border-radius: 10px;
