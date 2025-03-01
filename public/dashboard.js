@@ -18,7 +18,6 @@ const auth = getAuth(app);
 
 const username = localStorage.getItem("username");
 
-
 const welcomeMessage = document.getElementById("welcomeMessage");
 
 

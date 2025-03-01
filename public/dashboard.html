@@ -5,15 +5,264 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Buddy - Dashboard</title>
-    <link href="styles.css" rel="stylesheet" />
+    <link href="dashboard.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
-    <div class="container">
-        <h1 id="welcomeMessage">Welcome to Budget Buddy!</h1>
-        <p>Manage Money Easier!</p>
-        <div id="alert_user" class="message"></div>
-        <button id="btnLogout">Log Out</button> 
+    <div class="sidebar">
+        <div class="logo"></div>
+        <ul class="menu">
+            <li class="active">
+                <a href="#">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Income</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-money-bill"></i>
+                    <span>Current Money</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Expenses</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Spending Power</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-pie-chart"></i>
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-money-check"></i>
+                    <span>Spending Accounts</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="logout" id="btnLogout">
+                <a href="#">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main--content">
+        <div class="header--wrapper">
+            <div class="header--title">
+                <h1 id="welcomeMessage">Welcome to Budget Buddy!</h1>
+            </div>
+            <div class="user--info">
+                <div class="search--box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search" />
+                </div>
+                <img src="./image/img.jpg" alt="User Image" />
+            </div>
+        </div>
+    
+        <!--card container contains random information (can be edited)-->
+        <div class="card--container">
+            <h3 class="main--title"></h3>
+            <div class="card--wrapper">
+                <div class="payment--card">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">
+                                Spending Power
+                            </span>
+                            <span class="amount--value">$300.00</span>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="payment--card">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">
+                                Current Assets
+                            </span>
+                            <span class="amount--value">$500.00</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="payment--card">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">
+                                Expenses
+                            </span>
+                            <span class="amount--value">$200.00</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="payment--card">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">
+                                Income
+                            </span>
+                            <span class="amount--value">$500.00</span>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------------------------------------------------------------------->
+                <div class="divider">
+                    <h3 class="side--title">Categories</h3>
+                    <div class="small-divider">
+                    <div class="category--card">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        General Purchases
+                                    </span>
+                                    <span class="amount--value">$500.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="category--card">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Transportation
+                                    </span>
+                                    <span class="amount--value">$500.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="category--card">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Food and Drinks
+                                    </span>
+                                    <span class="amount--value">$500.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="category--card">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Entertainment
+                                    </span>
+                                    <span class="amount--value">$500.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!----------------------------------------------------------------------------------------->
+                <div class="divider">
+                    <h3 class="side--title">Accounts</h3>
+                    <div class="small-divider">
+                        <div class="accounts--card">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Chase Credit 
+                                    </span>
+                                    <span class="amount--value">$500.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accounts--card">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Capital One Credit
+                                    </span>
+                                    <span class="amount--value">$500.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accounts--card">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Chase Savings
+                                    </span>
+                                    <span class="amount--value">$500.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="accounts--card">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Marcus Savings
+                                    </span>
+                                    <span class="amount--value">$500.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------------------------------------------------------------------->
+
+                <!--makes a table for the dashboard-->
+                <div class="tabular--wrapper">
+                    <h3 class="main--title">Finance Data</h3>
+                    <div class="table--container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Money Spent</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2025-28-02</td>
+                                    <td>$100</td>
+                                    <td>Misc</td>
+                                    <td>Misc</td>
+                                    <td><button>Edit</button></td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script type="module" src="dashboard.js"></script>
 </body>
