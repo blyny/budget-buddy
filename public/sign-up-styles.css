@@ -1,0 +1,109 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', monospace;
+    background: navy;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+
+.center {
+    width: 400px;
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.center h1 {
+    text-align: center;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid silver;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.center form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+form .text_field {
+    position: relative;
+    margin: 0;
+    /* Reset margin to avoid extra spacing */
+}
+
+/*error here when pressing input field there are 2 underlines*/
+.text_field input {
+    width: 100%;
+    padding: 10px 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 2px solid #adadad;
+}
+
+.text_field label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: top 0.3s, color 0.3s;
+}
+
+.text_field input:focus~label,
+.text_field input:valid~label {
+    top: -10px;
+    font-size: 14px;
+    color: black;
+}
+
+.text_field span::before {
+    content: '';
+    position: absolute;
+    top: 38px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: black;
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.text_field input:focus~span::before,
+.text_field input:valid~span::before {
+    transform: scaleX(1);
+}
+
+#btnSignUp {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#btnSignUp:hover {
+    background-color: #218838;
+}
+
+.message {
+    margin-top: 15px;
+    color: #28a745;
+}
