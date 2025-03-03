@@ -10,7 +10,7 @@ body {
     overflow: hidden;
 }
 
-/* Center container with flexible height */
+
 .center {
     width: 400px;
     background: white;
@@ -18,7 +18,6 @@ body {
     padding: 30px;
     box-sizing: border-box;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    /* Remove fixed height to allow the container to expand */
 }
 
 .center h1 {
@@ -33,7 +32,7 @@ body {
 .center form {
     display: flex;
     flex-direction: column;
-    gap: 25px; /* Adds consistent spacing between form elements */
+    gap: 25px; 
 }
 
 form .text_field {
@@ -41,6 +40,7 @@ form .text_field {
     margin: 0; /* Reset margin to avoid extra spacing */
 }
 
+/*error here when pressing input field there are 2 underlines*/
 .text_field input {
     width: 100%;
     padding: 10px 5px;
@@ -49,7 +49,7 @@ form .text_field {
     border: none;
     background: none;
     outline: none;
-    border-bottom: 2px solid #adadad; /* Add a static underline */
+    border-bottom: 2px solid #adadad; 
 }
 
 .text_field label {
@@ -100,7 +100,7 @@ input[type="submit"] {
     cursor: pointer;
     outline: none;
     transition: background-color 0.3s, border-color 0.3s;
-    margin-top: 10px; /* Added margin-top to separate the button from the fields */
+    margin-top: 10px; 
 }
 
 input[type="submit"]:hover {
