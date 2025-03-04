@@ -1,24 +1,40 @@
 import { auth, db } from "./firebase-init.js";
-import { signOut } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 import { doc, setDoc, getDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
 const username = localStorage.getItem("username");
 
 const welcomeMessage = document.getElementById("welcomeMessage");
 
-// Test adding data
-const addData = document.getElementById("test");
-if (addData) {
-    test.addEventListener("click", async () => {
-        alert("Clicked Once!");
-        await setDoc(doc(db, "cities", "LA"), {
-            name: "Los Angeles",
-            state: "CA",
-            country: "USA"
-          });
-        alert("Clicked Twice!");
-    })
-}
+
+// We need the current user's login uid 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in
+    const uid = user.uid; // This is the current user's UID
+    console.log("User UID:", uid);
+    // Test adding data
+    const addData = document.getElementById("test");
+    if (addData) {
+        test.addEventListener("click", async () => {
+            alert("Data Going Through!");
+            // users collection -> uid document
+            // whatever is in "" refers to the existing collection/document in the path
+            await setDoc(doc(db, "users", uid), {
+                Amount: "500",
+
+            });
+            alert("Data Successfully In!");
+        })
+    }
+
+  } else {
+    // No user is signed in
+    console.log("No user is logged in.");
+  }
+});
+
+
 
 if (username) {
   welcomeMessage.textContent = `Welcome to Budget Buddy, ${username}!`;
