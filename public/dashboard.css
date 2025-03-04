@@ -18,6 +18,7 @@ body {
     display: flex;
 }
 
+
 .sidebar {
     position: fixed;
     top: 0;
