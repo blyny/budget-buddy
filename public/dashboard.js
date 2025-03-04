@@ -1,5 +1,9 @@
 import { auth } from "./firebase-init.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+
+const db = getFirestore();
 
 const username = localStorage.getItem("username");
 
@@ -17,8 +21,8 @@ if (btnLogout) {
   btnLogout.addEventListener("click", async () => {
     try {
       await signOut(auth);
-      localStorage.removeItem("username"); // Clear the stored username
-      window.location.href = "index.html"; // Redirect to the login page
+      localStorage.removeItem("username"); 
+      window.location.href = "index.html"; 
     } catch (error) {
       console.error("Error logging out:", error.message);
       alert("Error logging out. Please try again.");
@@ -33,21 +37,20 @@ paymentCards.forEach((card) => {
     const amountValue = card.querySelector(".amount--value");
     const amountInput = card.querySelector(".amount--input");
 
-    // Show the input field when the card is clicked
+    // Show input when the card is clicked
     card.addEventListener("click", () => {
-        // Hide the value and show the input field
+
         amountValue.style.display = "none";
         amountInput.classList.add("visible");
 
-        // Populate the input field with the current amount
+
         const currentAmount = amountValue.textContent.replace("$", "");
         amountInput.value = currentAmount;
 
-        // Focus on the input field
+
         amountInput.focus();
     });
 
-    // Update the value when the user finishes editing
     amountInput.addEventListener("blur", () => {
         const newAmount = parseFloat(amountInput.value);
 
@@ -58,7 +61,7 @@ paymentCards.forEach((card) => {
             alert("Please enter a valid number.");
         }
 
-        // Hide the input field and show the value
+
         amountInput.classList.remove("visible");
         amountValue.style.display = "inline";
     });
@@ -69,73 +72,112 @@ paymentCards.forEach((card) => {
             const newAmount = parseFloat(amountInput.value);
 
             if (!isNaN(newAmount)) {
-                // Update the card's value
                 amountValue.textContent = `$${newAmount.toFixed(2)}`;
             } else {
                 alert("Please enter a valid number.");
             }
-
-            // Hide the input field and show the value
             amountInput.classList.remove("visible");
             amountValue.style.display = "inline";
         }
     });
 });
 
+// Function to update the amount in Firestore
+async function updateCategoryAmount(userId, categoryId, newAmount) {
+  try {
+    const categoryRef = doc(db, "users", userId, "categories", categoryId);
+    await setDoc(categoryRef, { amount: newAmount }, { merge: true });
+    console.log("Category amount updated successfully!");
+  } catch (error) {
+    console.error("Error updating category amount:", error);
+  }
+}
+
+// Function to fetch the category amount from Firestore
+async function fetchCategoryAmount(userId, categoryId) {
+  try {
+    const categoryRef = doc(db, "users", userId, "categories", categoryId);
+    const categoryDoc = await getDoc(categoryRef);
+
+    if (categoryDoc.exists()) {
+      return categoryDoc.data().amount;
+    } else {
+      console.log("Category document does not exist.");
+      return 0;
+    }
+  } catch (error) {
+    console.error("Error fetching category amount:", error);
+    return 0;
+  }
+}
+
+// Function to initialize category cards with data from Firestore
+async function initializeCategoryCards(userId) {
+  const categoryCards = document.querySelectorAll(".category--card");
+
+  categoryCards.forEach(async (card) => {
+    const amountValue = card.querySelector(".amount--value");
+    const categoryId = card.dataset.categoryId;
+
+    const currentAmount = await fetchCategoryAmount(userId, categoryId);
+    amountValue.textContent = `$${currentAmount.toFixed(2)}`;
+  });
+}
+
+// Initialize the category cards when the page loads
+window.addEventListener("load", () => {
+  const userId = username; 
+  initializeCategoryCards(userId);
+});
+
 // CATEGORY CARDS
 const categoryCards = document.querySelectorAll(".category--card");
 
 categoryCards.forEach((card) => {
-    const amountValue = card.querySelector(".amount--value");
-    const amountInput = card.querySelector(".amount--input");
+  const amountValue = card.querySelector(".amount--value");
+  const amountInput = card.querySelector(".amount--input");
+  const categoryId = card.dataset.categoryId;
+  const userId = username;
 
-    // Show the input field when the card is clicked
-    card.addEventListener("click", () => {
-        // Hide the value and show the input field
-        amountValue.style.display = "none";
-        amountInput.classList.add("visible");
+  card.addEventListener("click", () => {
+    amountValue.style.display = "none";
+    amountInput.classList.add("visible");
 
-        // Populate the input field with the current amount
-        const currentAmount = amountValue.textContent.replace("$", "");
-        amountInput.value = currentAmount;
+    const currentAmount = amountValue.textContent.replace("$", "");
+    amountInput.value = currentAmount;
 
-        // Focus on the input field
-        amountInput.focus();
-    });
+    amountInput.focus();
+  });
 
-    // Update the value when the user finishes editing
-    amountInput.addEventListener("blur", () => {
-        const newAmount = parseFloat(amountInput.value);
+  amountInput.addEventListener("blur", async () => {
+    const newAmount = parseFloat(amountInput.value);
 
-        if (!isNaN(newAmount)) {
-            // Update the card's value
-            amountValue.textContent = `$${newAmount.toFixed(2)}`;
-        } else {
-            alert("Please enter a valid number.");
-        }
+    if (!isNaN(newAmount)) {
+      amountValue.textContent = `$${newAmount.toFixed(2)}`;
+      await updateCategoryAmount(userId, categoryId, newAmount);
+    } else {
+      alert("Please enter a valid number.");
+    }
 
-        // Hide the input field and show the value
-        amountInput.classList.remove("visible");
-        amountValue.style.display = "inline";
-    });
+    amountInput.classList.remove("visible");
+    amountValue.style.display = "inline";
+  });
 
-    // Update the value when the user presses "Enter"
-    amountInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-            const newAmount = parseFloat(amountInput.value);
+  amountInput.addEventListener("keypress", async (e) => {
+    if (e.key === "Enter") {
+      const newAmount = parseFloat(amountInput.value);
 
-            if (!isNaN(newAmount)) {
-                // Update the card's value
-                amountValue.textContent = `$${newAmount.toFixed(2)}`;
-            } else {
-                alert("Please enter a valid number.");
-            }
+      if (!isNaN(newAmount)) {
+        amountValue.textContent = `$${newAmount.toFixed(2)}`;
+        await updateCategoryAmount(userId, categoryId, newAmount);
+      } else {
+        alert("Please enter a valid number.");
+      }
 
-            // Hide the input field and show the value
-            amountInput.classList.remove("visible");
-            amountValue.style.display = "inline";
-        }
-    });
+      amountInput.classList.remove("visible");
+      amountValue.style.display = "inline";
+    }
+  });
 });
 
 
@@ -146,21 +188,20 @@ accountsCards.forEach((card) => {
     const amountValue = card.querySelector(".amount--value");
     const amountInput = card.querySelector(".amount--input");
 
-    // Show the input field when the card is clicked
+    // Show input when the card is clicked
     card.addEventListener("click", () => {
-        // Hide the value and show the input field
+
         amountValue.style.display = "none";
         amountInput.classList.add("visible");
 
-        // Populate the input field with the current amount
+
         const currentAmount = amountValue.textContent.replace("$", "");
         amountInput.value = currentAmount;
 
-        // Focus on the input field
+
         amountInput.focus();
     });
 
-    // Update the value when the user finishes editing
     amountInput.addEventListener("blur", () => {
         const newAmount = parseFloat(amountInput.value);
 
@@ -171,7 +212,7 @@ accountsCards.forEach((card) => {
             alert("Please enter a valid number.");
         }
 
-        // Hide the input field and show the value
+
         amountInput.classList.remove("visible");
         amountValue.style.display = "inline";
     });
@@ -182,13 +223,10 @@ accountsCards.forEach((card) => {
             const newAmount = parseFloat(amountInput.value);
 
             if (!isNaN(newAmount)) {
-                // Update the card's value
                 amountValue.textContent = `$${newAmount.toFixed(2)}`;
             } else {
                 alert("Please enter a valid number.");
             }
-
-            // Hide the input field and show the value
             amountInput.classList.remove("visible");
             amountValue.style.display = "inline";
         }
