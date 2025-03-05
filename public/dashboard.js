@@ -18,10 +18,17 @@ onAuthStateChanged(auth, (user) => {
         test.addEventListener("click", async () => {
             alert("Data Going Through!");
             // users collection -> uid document
-            // whatever is in "" refers to the existing collection/document in the path
+            // whatever is in "" refers to the existing collection/document in the path (if it can find it)
             await setDoc(doc(db, "users", uid, "Categories", "Food"), {
                 Amount: "500",
             });
+            await setDoc(doc(db, "users", uid, "Categories", "Entertainment"), {
+                Amount: "200",
+            });
+            await setDoc(doc(db, "users", uid, "Account", "Chase"), {
+                Amount: "200",
+            });
+            
             alert("Data Successfully In!");
         })
     }
@@ -138,7 +145,6 @@ onAuthStateChanged(auth, (user) => {
                 } else {
                     alert("Please enter a valid number.");
                 }
-
                 amountInput.classList.remove("visible");
                 amountValue.style.display = "inline";
             }
