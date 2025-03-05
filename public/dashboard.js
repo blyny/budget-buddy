@@ -38,8 +38,8 @@ onAuthStateChanged(auth, (user) => {
         btnLogout.addEventListener("click", async () => {
         try {
             await signOut(auth);
-            localStorage.removeItem("username"); // Clear the stored username
-            window.location.href = "index.html"; // Redirect to the login page
+            localStorage.removeItem("username"); 
+            window.location.href = "index.html"; 
 
             console.log("Document written with ID: ", docRef.id);
         } catch (error) {
@@ -56,49 +56,40 @@ onAuthStateChanged(auth, (user) => {
         const amountValue = card.querySelector(".amount--value");
         const amountInput = card.querySelector(".amount--input");
 
-        // Show the input field when the card is clicked
+        // Show input when the card is clicked
         card.addEventListener("click", () => {
-            // Hide the value and show the input field
             amountValue.style.display = "none";
             amountInput.classList.add("visible");
 
-            // Populate the input field with the current amount
             const currentAmount = amountValue.textContent.replace("$", "");
             amountInput.value = currentAmount;
 
-            // Focus on the input field
             amountInput.focus();
         });
 
-        // Update the value when the user finishes editing
         amountInput.addEventListener("blur", () => {
             const newAmount = parseFloat(amountInput.value);
 
             if (!isNaN(newAmount)) {
-                // Update the card's value
                 amountValue.textContent = `$${newAmount.toFixed(2)}`;
             } else {
                 alert("Please enter a valid number.");
             }
 
-            // Hide the input field and show the value
             amountInput.classList.remove("visible");
             amountValue.style.display = "inline";
         });
 
-        // Update the value when the user presses "Enter"
         amountInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 const newAmount = parseFloat(amountInput.value);
 
                 if (!isNaN(newAmount)) {
-                    // Update the card's value
                     amountValue.textContent = `$${newAmount.toFixed(2)}`;
                 } else {
                     alert("Please enter a valid number.");
                 }
 
-                // Hide the input field and show the value
                 amountInput.classList.remove("visible");
                 amountValue.style.display = "inline";
             }
@@ -112,49 +103,42 @@ onAuthStateChanged(auth, (user) => {
         const amountValue = card.querySelector(".amount--value");
         const amountInput = card.querySelector(".amount--input");
 
-        // Show the input field when the card is clicked
+
         card.addEventListener("click", () => {
-            // Hide the value and show the input field
+
             amountValue.style.display = "none";
             amountInput.classList.add("visible");
 
-            // Populate the input field with the current amount
             const currentAmount = amountValue.textContent.replace("$", "");
             amountInput.value = currentAmount;
 
-            // Focus on the input field
             amountInput.focus();
         });
 
-        // Update the value when the user finishes editing
+
         amountInput.addEventListener("blur", () => {
             const newAmount = parseFloat(amountInput.value);
 
             if (!isNaN(newAmount)) {
-                // Update the card's value
                 amountValue.textContent = `$${newAmount.toFixed(2)}`;
             } else {
                 alert("Please enter a valid number.");
             }
 
-            // Hide the input field and show the value
             amountInput.classList.remove("visible");
             amountValue.style.display = "inline";
         });
 
-        // Update the value when the user presses "Enter"
         amountInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 const newAmount = parseFloat(amountInput.value);
 
                 if (!isNaN(newAmount)) {
-                    // Update the card's value
                     amountValue.textContent = `$${newAmount.toFixed(2)}`;
                 } else {
                     alert("Please enter a valid number.");
                 }
 
-                // Hide the input field and show the value
                 amountInput.classList.remove("visible");
                 amountValue.style.display = "inline";
             }
@@ -168,49 +152,40 @@ onAuthStateChanged(auth, (user) => {
         const amountValue = card.querySelector(".amount--value");
         const amountInput = card.querySelector(".amount--input");
 
-        // Show the input field when the card is clicked
         card.addEventListener("click", () => {
-            // Hide the value and show the input field
             amountValue.style.display = "none";
             amountInput.classList.add("visible");
 
-            // Populate the input field with the current amount
             const currentAmount = amountValue.textContent.replace("$", "");
             amountInput.value = currentAmount;
 
-            // Focus on the input field
             amountInput.focus();
         });
 
-        // Update the value when the user finishes editing
         amountInput.addEventListener("blur", () => {
             const newAmount = parseFloat(amountInput.value);
 
             if (!isNaN(newAmount)) {
-                // Update the card's value
+
                 amountValue.textContent = `$${newAmount.toFixed(2)}`;
             } else {
                 alert("Please enter a valid number.");
             }
 
-            // Hide the input field and show the value
             amountInput.classList.remove("visible");
             amountValue.style.display = "inline";
         });
 
-        // Update the value when the user presses "Enter"
+
         amountInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 const newAmount = parseFloat(amountInput.value);
 
                 if (!isNaN(newAmount)) {
-                    // Update the card's value
                     amountValue.textContent = `$${newAmount.toFixed(2)}`;
                 } else {
                     alert("Please enter a valid number.");
                 }
-
-                // Hide the input field and show the value
                 amountInput.classList.remove("visible");
                 amountValue.style.display = "inline";
             }
@@ -221,5 +196,3 @@ onAuthStateChanged(auth, (user) => {
     console.log("No user is logged in.");
   }
 });
-
-
