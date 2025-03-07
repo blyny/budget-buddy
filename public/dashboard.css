@@ -162,17 +162,13 @@ main content cause they over lap*/
 
 .search--box i:hover {
     transform: scale(1.1);
-
-
 }
 
 /*for card container*/
 .input-with-symbol {
     display: flex;
     align-items: center;
-    border: 2px solid #add8e6;
-    border-radius: 5px;
-    padding: 5px 10px;
+    padding: 5px;
     width: fit-content;
 }
 
@@ -182,7 +178,11 @@ main content cause they over lap*/
     margin-right: 5px;
 }
 
-#spendingPower {
+/* Overview */
+#spendingPower,
+#currentAssets,
+#Expenses,
+#Income {
     width: 200px;
     height: 40px;
     padding: 5px;
@@ -191,6 +191,34 @@ main content cause they over lap*/
     outline: none;
     background-color: transparent;
 }
+
+/* Categories */
+#generalPurchases,
+#foodAndDrinks,
+#Entertainment,
+#Transportation {
+    width: 200px;
+    height: 15px;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+#Chase,
+#Savings {
+    width: 200px;
+    height: 15px;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+/* Categories */
+/* Insert Accounts */
 
 .input-with-symbol:focus-within {
     border-color: #66afe9;
@@ -315,7 +343,8 @@ main content cause they over lap*/
 /*for the table*/
 
 .tabular--wrapper {
-    margin-top: 2rem;
+    margin-top: 3rem;
+    margin-right: 15rem;
 }
 
 .table--container {
