@@ -57,7 +57,7 @@ form .text_field{
     position:absolute; 
     top:50%; 
     left:5px; 
-    color:blue; 
+    color:#adadad; 
     transform: translateY(-50%); 
     font-size:18px; 
     pointer-events:none; 
