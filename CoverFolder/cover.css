@@ -1,0 +1,22 @@
+body{ 
+    background-color: navy; 
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+} 
+.container{ 
+    text-align:center;
+}
+h1 { 
+    position:center;
+    font-size: 24px;
+    color: white;
+} 
+h3 { 
+    position:center;
+    font-size: 18px;
+    color: white;
+}  
