@@ -166,10 +166,16 @@ main content cause they over lap*/
 
 /*for card container*/
 .input-with-symbol {
+    font-size: 0.5rem;
     display: flex;
     align-items: center;
     padding: 5px;
     width: fit-content;
+}
+
+.input-with-symbol:focus-within {
+    border-color: #66afe9;
+    /* Change border color when input is focused */
 }
 
 .symbol {
@@ -220,10 +226,6 @@ main content cause they over lap*/
 /* Categories */
 /* Insert Accounts */
 
-.input-with-symbol:focus-within {
-    border-color: #66afe9;
-    /* Change border color when input is focused */
-}
 
 .card--container {
     background: white;
@@ -283,7 +285,7 @@ main content cause they over lap*/
     border-radius: 10px;
     padding: 1.2rem;
     width: 290px;
-    height: 75px;
+    height: 90px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -299,7 +301,7 @@ main content cause they over lap*/
     border-radius: 10px;
     padding: 1.2rem;
     width: 290px;
-    height: 75px;
+    height: 90px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -323,7 +325,7 @@ main content cause they over lap*/
 }
 
 .title {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 200;
 }
 

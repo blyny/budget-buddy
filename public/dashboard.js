@@ -6,7 +6,7 @@ const username = localStorage.getItem("username");
 const welcomeMessage = document.getElementById("welcomeMessage");
 
 // Work while the user is logged in
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
         // User is signed in
         const uid = user.uid; // This is the current user's UID
@@ -18,7 +18,103 @@ onAuthStateChanged(auth, (user) => {
             welcomeMessage.textContent = "Welcome to Budget Buddy!";
         }
 
-        // ADD DATA TO OVERVIEW ------------------------------------------------------------------------------
+        // GET DATA FROM OVERVIEW ----------------------------------------------------------------------------
+        const spendingPowerRef = doc(db, "users", uid, "Overview", "spendingPower");
+        const spendingPowerSnap = await getDoc(spendingPowerRef);
+        if (spendingPowerSnap.exists()) {
+            console.log("Document data:", spendingPowerSnap.data());
+            currentSpendingPower.textContent = spendingPowerSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        const currentAssetsRef = doc(db, "users", uid, "Overview", "currentAssets");
+        const currentAssetsSnap = await getDoc(currentAssetsRef);
+        if (currentAssetsSnap.exists()) {
+            console.log("Document data:", currentAssetsSnap.data());
+            currentCurrentAssets.textContent = currentAssetsSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        const ExpensesRef = doc(db, "users", uid, "Overview", "Expenses");
+        const ExpensesSnap = await getDoc(ExpensesRef);
+        if (ExpensesSnap.exists()) {
+            console.log("Document data:", ExpensesSnap.data());
+            currentExpenses.textContent = ExpensesSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        const IncomeRef = doc(db, "users", uid, "Overview", "Income");
+        const IncomeSnap = await getDoc(IncomeRef);
+        if (IncomeSnap.exists()) {
+            console.log("Document data:", IncomeSnap.data());
+            currentIncome.textContent = IncomeSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        // -----------------------------------------------------------------------------------------------------
+        // GET DATA FROM CATEGORIES ----------------------------------------------------------------------------
+        const GeneralPurchasesRef = doc(db, "users", uid, "Categories", "generalPurchases");
+        const GeneralPurchasesSnap = await getDoc(GeneralPurchasesRef);
+        if (GeneralPurchasesSnap.exists()) {
+            console.log("Document data:", GeneralPurchasesSnap.data());
+            currentGeneralPurchases.textContent = GeneralPurchasesSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        const TransportationRef = doc(db, "users", uid, "Categories", "Transportation");
+        const TransportationSnap = await getDoc(TransportationRef);
+        if (TransportationSnap.exists()) {
+            console.log("Document data:", TransportationSnap.data());
+            currentTransportation.textContent = TransportationSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        const FoodAndDrinksRef = doc(db, "users", uid, "Categories", "foodAndDrinks");
+        const FoodAndDrinksSnap = await getDoc(FoodAndDrinksRef);
+        if (FoodAndDrinksSnap.exists()) {
+            console.log("Document data:", FoodAndDrinksSnap.data());
+            currentFoodAndDrinks.textContent = FoodAndDrinksSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        const EntertainmentRef = doc(db, "users", uid, "Categories", "Entertainment");
+        const EntertainmentSnap = await getDoc(EntertainmentRef);
+        if (EntertainmentSnap.exists()) {
+            console.log("Document data:", EntertainmentSnap.data());
+            currentEntertainment.textContent = EntertainmentSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        // -----------------------------------------------------------------------------------------------------
+        // GET DATA FROM ACCOUNTS ------------------------------------------------------------------------------
+        const currentCreditRef = doc(db, "users", uid, "Accounts", "Chase");
+        const currentCreditSnap = await getDoc(currentCreditRef);
+        if (currentCreditSnap.exists()) {
+            console.log("Document data:", currentCreditSnap.data());
+            currentCredit.textContent = currentCreditSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        const currentSavingsRef = doc(db, "users", uid, "Accounts", "Savings");
+        const currentSavingsSnap = await getDoc(currentSavingsRef);
+        if (currentSavingsSnap.exists()) {
+            console.log("Document data:", currentSavingsSnap.data());
+            currentSavings.textContent = currentSavingsSnap.data().Amount;
+        } else {
+            console.log("No such document!");
+        }
+
+        // -----------------------------------------------------------------------------------------------------
+        // ADD DATA TO OVERVIEW --------------------------------------------------------------------------------
         const addDataspendingPower = document.getElementById("spendingPower");
         if (addDataspendingPower) {
             spendingPower.addEventListener("keydown", async (event) => {
@@ -29,6 +125,7 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("spendingPower").value = "";
                 }
             });
         }
@@ -43,10 +140,11 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("currentAssets").value = "";
                 }
             });
         }
-
+        
         const addDataExpenses = document.getElementById("Expenses");
         if (addDataExpenses) {
             Expenses.addEventListener("keydown", async (event) => {
@@ -57,6 +155,7 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("Expenses").value = "";
                 }
             });
         }
@@ -71,6 +170,7 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("Income").value = "";
                 }
             });
         }
@@ -86,6 +186,7 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("generalPurchases").value = "";
                 }
             });
         }
@@ -100,6 +201,7 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("Transportation").value = "";
                 }
             });
         }
@@ -114,6 +216,7 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("foodAndDrinks").value = "";
                 }
             });
         }
@@ -128,9 +231,11 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("Entertainment").value = "";
                 }
             });
         }
+        // ---------------------------------------------------------------------------------------------------
         // ADD DATA TO ACCOUNTS ------------------------------------------------------------------------------
         const addDataChase = document.getElementById("Chase");
         if (addDataChase) {
@@ -142,6 +247,7 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("Chase").value = "";
                 }
             });
         }
@@ -156,13 +262,12 @@ onAuthStateChanged(auth, (user) => {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");
+                    document.getElementById("Savings").value = "";
                 }
             });
         }
         // ---------------------------------------------------------------------------------------------------
-
-        // --------------------------------------------------------------------------------------------------
-        // Logout -------------------------------------------------------------------------------------------
+        // Logout --------------------------------------------------------------------------------------------
         const btnLogout = document.getElementById("btnLogout");
         if (btnLogout) {
             btnLogout.addEventListener("click", async () => {
@@ -177,10 +282,10 @@ onAuthStateChanged(auth, (user) => {
                 }
             });     
         }
-        //--------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------
   } else {
     // No user is signed in
     console.log("No user is logged in.");
-    welcomeMessage.textContent = "Welcome to Budget Buddy! There is no user logged in."; ;
+    welcomeMessage.textContent = "Welcome to Budget Buddy! There is no user logged in."; 
   }
 });
