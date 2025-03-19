@@ -267,6 +267,20 @@ onAuthStateChanged(auth, async (user) => {
             });
         }
         // ---------------------------------------------------------------------------------------------------
+        // Redirect to other pages ---------------------------------------------------------------------------
+        const btnAnalysis = document.getElementById("btnAnalysis");
+        if (btnAnalysis) {
+            btnAnalysis.addEventListener("click", () => {
+                window.location.href = "dashboard2.html";
+            });
+        }
+        const btnBudgetPlan = document.getElementById("btnBudgetPlan");
+        if (btnBudgetPlan) {
+            btnBudgetPlan.addEventListener("click", () => {
+                window.location.href = "dashboard3.html";
+            });
+        }
+        
         // Logout --------------------------------------------------------------------------------------------
         const btnLogout = document.getElementById("btnLogout");
         if (btnLogout) {

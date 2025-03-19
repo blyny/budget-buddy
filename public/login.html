@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Buddy - Log In</title>
+    <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="center">
+        <h1>Budget Buddy - Log In</h1>
+        <form id="loginForm">
+            <div class="text_field">
+                <input type="email" id="email" required>
+                <span></span>
+                <label>Email</label>
+            </div>
+
+            <div class="text_field">
+                <input type="password" id="password" required>
+                <span></span>
+                <label>Password</label>
+            </div>
+            <button type="button" id="btnLogin">Log In</button>
+        </form>
+        <br>
+        <div class="signup">
+            Don't have an account? <a href="sign-up.html">Sign Up</a>
+        </div>
+    
+        <div id="message" class="message"></div>
+    </div>
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="index.js"></script>
+</body>
+
+</html>
