@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase-init.js";
-import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-import { doc, setDoc, getDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 const username = localStorage.getItem("username");
 const welcomeMessage = document.getElementById("welcomeMessage");
@@ -10,7 +10,7 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
         // User is signed in
         const uid = user.uid; // This is the current user's UID
-        console.log("User is logged in");
+        console.log("User is logged in" + uid);
 
         if (username) {
             welcomeMessage.textContent = `Welcome to Budget Buddy, ${username}!`;

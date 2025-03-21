@@ -2,8 +2,8 @@ import { auth, db } from "./firebase-init.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 // LOG IN
 const loginEmailPassword = async () => {
