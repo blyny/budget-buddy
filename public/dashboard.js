@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase-init.js";
 import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 const username = localStorage.getItem("username");
 const welcomeMessage = document.getElementById("welcomeMessage");
@@ -19,117 +19,118 @@ onAuthStateChanged(auth, async (user) => {
         }
 
         // GET DATA FROM OVERVIEW ----------------------------------------------------------------------------
+        const unsubcurrentAssets = onSnapshot(doc(db, "users", uid, "Overview", "currentAssets"), (doc) => {
+            console.log("Current data: ", doc.data());
+            const assets = parseFloat(doc.data().Amount);
+            currentCurrentAssets.textContent = assets.toFixed(2);
+            updateSpendingPower();
+        });
+        const unsubExpenses = onSnapshot(doc(db, "users", uid, "Overview", "Expenses"), (doc) => {
+            console.log("Current data: ", doc.data());
+            const expenses = parseFloat(doc.data().Amount);
+            currentExpenses.textContent = expenses.toFixed(2);
+            updateSpendingPower();
+        });
+        const unsubIncome = onSnapshot(doc(db, "users", uid, "Overview", "Income"), (doc) => {
+            console.log("Current data: ", doc.data());
+            const income = parseFloat(doc.data().Amount);
+            currentIncome.textContent = income.toFixed(2);
+        });
+
         const spendingPowerRef = doc(db, "users", uid, "Overview", "spendingPower");
-        const spendingPowerSnap = await getDoc(spendingPowerRef);
-        if (spendingPowerSnap.exists()) {
-            console.log("Document data:", spendingPowerSnap.data());
-            currentSpendingPower.textContent = spendingPowerSnap.data().Amount;
-        } else {
-            console.log("No such document!");
+        async function updateSpendingPower() {
+            // Only proceed if we have both values
+            if (currentCurrentAssets.textContent && currentExpenses.textContent) {
+                const assets = parseFloat(currentCurrentAssets.textContent);
+                const expenses = parseFloat(currentExpenses.textContent);
+                const spendingPower = assets - expenses;
+                
+                // Update UI
+                currentSpendingPower.textContent = spendingPower.toFixed(2);
+                
+                // Update Firestore
+                try {
+                    await setDoc(spendingPowerRef, {
+                        Amount: spendingPower,                        
+                    });
+                    console.log("Spending power updated in Firestore");
+                } catch (error) {
+                    console.error("Error updating spending power:", error);
+                }
+            }
         }
 
-        const currentAssetsRef = doc(db, "users", uid, "Overview", "currentAssets");
-        const currentAssetsSnap = await getDoc(currentAssetsRef);
-        if (currentAssetsSnap.exists()) {
-            console.log("Document data:", currentAssetsSnap.data());
-            currentCurrentAssets.textContent = currentAssetsSnap.data().Amount;
-        } else {
-            console.log("No such document!");
-        }
 
-        const ExpensesRef = doc(db, "users", uid, "Overview", "Expenses");
-        const ExpensesSnap = await getDoc(ExpensesRef);
-        if (ExpensesSnap.exists()) {
-            console.log("Document data:", ExpensesSnap.data());
-            currentExpenses.textContent = ExpensesSnap.data().Amount;
-        } else {
-            console.log("No such document!");
-        }
-
-        const IncomeRef = doc(db, "users", uid, "Overview", "Income");
-        const IncomeSnap = await getDoc(IncomeRef);
-        if (IncomeSnap.exists()) {
-            console.log("Document data:", IncomeSnap.data());
-            currentIncome.textContent = IncomeSnap.data().Amount;
-        } else {
-            console.log("No such document!");
-        }
 
         // -----------------------------------------------------------------------------------------------------
         // GET DATA FROM CATEGORIES ----------------------------------------------------------------------------
-        const GeneralPurchasesRef = doc(db, "users", uid, "Categories", "generalPurchases");
-        const GeneralPurchasesSnap = await getDoc(GeneralPurchasesRef);
-        if (GeneralPurchasesSnap.exists()) {
-            console.log("Document data:", GeneralPurchasesSnap.data());
-            currentGeneralPurchases.textContent = GeneralPurchasesSnap.data().Amount;
-        } else {
-            console.log("No such document!");
-        }
+        const unsubgeneralPurchases = onSnapshot(doc(db, "users", uid, "Categories", "generalPurchases"), (doc) => {
+            console.log("Current data: ", doc.data());
+            const generalPurchases = parseFloat(doc.data().Amount);
+            currentGeneralPurchases.textContent = generalPurchases.toFixed(2);
+            updateExpenses()
+        });
+        const unsubTransportation = onSnapshot(doc(db, "users", uid, "Categories", "Transportation"), (doc) => {
+            console.log("Current data: ", doc.data());
+            const Transportation = parseFloat(doc.data().Amount);
+            currentTransportation.textContent = Transportation.toFixed(2);
+            updateExpenses()
+        });
+        const unsubfoodAndDrinks = onSnapshot(doc(db, "users", uid, "Categories", "foodAndDrinks"), (doc) => {
+            console.log("Current data: ", doc.data());
+            const foodAndDrinks = parseFloat(doc.data().Amount);
+            currentFoodAndDrinks.textContent = foodAndDrinks.toFixed(2);
+            updateExpenses()
+        });
+        const unsubEntertainment = onSnapshot(doc(db, "users", uid, "Categories", "Entertainment"), (doc) => {
+            console.log("Current data: ", doc.data());
+            const Entertainment = parseFloat(doc.data().Amount);
+            currentEntertainment.textContent = Entertainment.toFixed(2);
+            updateExpenses()
+        });
 
-        const TransportationRef = doc(db, "users", uid, "Categories", "Transportation");
-        const TransportationSnap = await getDoc(TransportationRef);
-        if (TransportationSnap.exists()) {
-            console.log("Document data:", TransportationSnap.data());
-            currentTransportation.textContent = TransportationSnap.data().Amount;
-        } else {
-            console.log("No such document!");
-        }
-
-        const FoodAndDrinksRef = doc(db, "users", uid, "Categories", "foodAndDrinks");
-        const FoodAndDrinksSnap = await getDoc(FoodAndDrinksRef);
-        if (FoodAndDrinksSnap.exists()) {
-            console.log("Document data:", FoodAndDrinksSnap.data());
-            currentFoodAndDrinks.textContent = FoodAndDrinksSnap.data().Amount;
-        } else {
-            console.log("No such document!");
-        }
-
-        const EntertainmentRef = doc(db, "users", uid, "Categories", "Entertainment");
-        const EntertainmentSnap = await getDoc(EntertainmentRef);
-        if (EntertainmentSnap.exists()) {
-            console.log("Document data:", EntertainmentSnap.data());
-            currentEntertainment.textContent = EntertainmentSnap.data().Amount;
-        } else {
-            console.log("No such document!");
+        const ExpensesRef = doc(db, "users", uid, "Overview", "Expenses");
+        async function updateExpenses() {
+            // Only proceed if we have both values
+            if (currentGeneralPurchases.textContent && currentTransportation.textContent && currentFoodAndDrinks.textContent && currentEntertainment.textContent) {
+                const generalPurchases = parseFloat(currentGeneralPurchases.textContent);
+                const Transportation = parseFloat(currentTransportation.textContent);
+                const foodAndDrinks = parseFloat(currentFoodAndDrinks.textContent);
+                const Entertainment = parseFloat(currentEntertainment.textContent);
+                const Expenses = generalPurchases + Transportation + foodAndDrinks + Entertainment;
+                
+                // Update UI
+                currentExpenses.textContent = Expenses.toFixed(2);
+                
+                // Update Firestore
+                try {
+                    await setDoc(ExpensesRef, {
+                        Amount: Expenses,                        
+                    });
+                    console.log("Spending power updated in Firestore");
+                } catch (error) {
+                    console.error("Error updating spending power:", error);
+                }
+            }
         }
 
         // -----------------------------------------------------------------------------------------------------
         // GET DATA FROM ACCOUNTS ------------------------------------------------------------------------------
-        const currentCreditRef = doc(db, "users", uid, "Accounts", "Chase");
-        const currentCreditSnap = await getDoc(currentCreditRef);
-        if (currentCreditSnap.exists()) {
-            console.log("Document data:", currentCreditSnap.data());
-            currentCredit.textContent = currentCreditSnap.data().Amount;
-        } else {
-            console.log("No such document!");
-        }
-
-        const currentSavingsRef = doc(db, "users", uid, "Accounts", "Savings");
-        const currentSavingsSnap = await getDoc(currentSavingsRef);
-        if (currentSavingsSnap.exists()) {
-            console.log("Document data:", currentSavingsSnap.data());
-            currentSavings.textContent = currentSavingsSnap.data().Amount;
-        } else {
-            console.log("No such document!");
-        }
+        const unsubChase = onSnapshot(doc(db, "users", uid, "Accounts", "Credit"), (doc) => {
+            console.log("Current data: ", doc.data());
+            currentCredit.textContent = doc.data().Amount;
+            const Credit = parseFloat(doc.data().Amount);
+            currentCredit.textContent = Credit.toFixed(2);
+        });
+        const unsubSavings = onSnapshot(doc(db, "users", uid, "Accounts", "Savings"), (doc) => {
+            console.log("Current data: ", doc.data());
+            currentSavings.textContent = doc.data().Amount;
+            const Savings = parseFloat(doc.data().Amount);
+            currentSavings.textContent = Savings.toFixed(2);
+        });
 
         // -----------------------------------------------------------------------------------------------------
         // ADD DATA TO OVERVIEW --------------------------------------------------------------------------------
-        const addDataspendingPower = document.getElementById("spendingPower");
-        if (addDataspendingPower) {
-            spendingPower.addEventListener("keydown", async (event) => {
-                if (event.key === "Enter") {
-                    alert("Data Going Through!");
-                    const valueData = spendingPower.value;
-                    await setDoc(doc(db, "users", uid, "Overview", "spendingPower"), {
-                        Amount: valueData,
-                    });
-                    alert("Data Successfully In!");
-                    document.getElementById("spendingPower").value = "";
-                }
-            });
-        }
-
         const addDatacurrentAssets = document.getElementById("currentAssets");
         if (addDatacurrentAssets) {
             currentAssets.addEventListener("keydown", async (event) => {
@@ -243,7 +244,7 @@ onAuthStateChanged(auth, async (user) => {
                 if (event.key === "Enter") {
                     alert("Data Going Through!");
                     const valueData = Chase.value;
-                    await setDoc(doc(db, "users", uid, "Accounts", "Chase"), {
+                    await setDoc(doc(db, "users", uid, "Accounts", "Credit"), {
                         Amount: valueData,
                     });
                     alert("Data Successfully In!");

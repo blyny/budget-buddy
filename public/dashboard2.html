@@ -31,6 +31,12 @@
                     <span>Budget Plan</span>
                 </a>
             </li>
+            <li class="logout" id="btnLogout">
+                <a href="#">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -46,16 +52,53 @@
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="Search" />
                 </div>
-                <!--make a default image? and some functionality thing
-                    to make it so the picture someone wants-->
                 <img src="./image/img.jpg" alt="User Image" />
             </div>
         </div>
+        <div>
+            <div class="mainBody">
+                <div class="currentIncome">
+                    Income: <span class="symbol">$</span>
+                    <span id="currentIncome"></span>
+                </div>
 
+                <div class="currentSpendingPower">
+                    Spending Power: <span class="symbol">$</span>
+                    <span id="currentSpendingPower"></span>
+                </div>
 
+                Input: Period of Time
+                <select id="period" name="period">
+                    <option value="weekly">Weekly</option>
+                    <option value="bi-weekly">Bi-Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                </select> <br>
+                
+                Input: % of Income to Save (Dropdown Percentage)
+                <select id="percentage" name="percentage">
+                    <option value="10">10%</option>
+                    <option value="20">20%</option>
+                    <option value="30">30%</option>
+                    <option value="40">40%</option>
+                    <option value="50">50%</option>
+                </select> <br>
+                
+                Input: Dropdown of City (Chicago, New York, etc.)
+                <select id="city" name="city">
+                    <option value="Chicago">Chicago</option>
+                    <option value="New York">New York</option>
+                    <option value="Los Angeles">Los Angeles</option>
+                    <option value="Houston">Houston</option>
+                    <option value="Phoenix">Phoenix</option>
+                </select> <br>
+                Output: Chart? But breakdown of expenses per the city
+            </div>         
+        </div>
     </div>
     </div>
-    </div>
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="dashboard2.js"></script>
 </body>
 
 </html>
