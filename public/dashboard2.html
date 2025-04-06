@@ -20,15 +20,15 @@
                 </a>
             </li>
             <li class="active">
-                <a href="#">
-                    <i class="far fa-chart-bar"></i>
-                    <span>Analysis</span>
+                <a href="#">               
+                    <i class="fas fa-wallet"></i>
+                    <span>Budget Plan</span>
                 </a>
             </li>
             <li>
                 <a href="dashboard3.html">
-                    <i class="fas fa-wallet"></i>
-                    <span>Budget Plan</span>
+                    <i class="far fa-chart-bar"></i>
+                    <span>Budget Analysis</span>
                 </a>
             </li>
             <li class="logout" id="btnLogout">
@@ -45,7 +45,7 @@
         <div class="header--wrapper">
             <div class="header--title">
                 <span></span>
-                <h2>Budget Analysis</h2>
+                <h2>Budget Plan</h2>
             </div>
             <div class="user--info">
                 <div class="search--box">
@@ -67,32 +67,37 @@
                     <span id="currentSpendingPower"></span>
                 </div>
 
-                Input: Period of Time
+                Income Frequency:
                 <select id="period" name="period">
                     <option value="weekly">Weekly</option>
-                    <option value="bi-weekly">Bi-Weekly</option>
+                    <option value="bi-weekly">BiWeekly</option>
                     <option value="monthly">Monthly</option>
-                    <option value="yearly">Yearly</option>
                 </select> <br>
                 
-                Input: % of Income to Save (Dropdown Percentage)
+                % of Income to Save
                 <select id="percentage" name="percentage">
                     <option value="10">10%</option>
                     <option value="20">20%</option>
                     <option value="30">30%</option>
                     <option value="40">40%</option>
                     <option value="50">50%</option>
+                    <option value="60">60%</option>
+                    <option value="70">70%</option>
                 </select> <br>
                 
-                Input: Dropdown of City (Chicago, New York, etc.)
+                What is your Current City?
                 <select id="city" name="city">
+                    <option value="New York City">New York City</option>
                     <option value="Chicago">Chicago</option>
-                    <option value="New York">New York</option>
                     <option value="Los Angeles">Los Angeles</option>
                     <option value="Houston">Houston</option>
                     <option value="Phoenix">Phoenix</option>
                 </select> <br>
-                Output: Chart? But breakdown of expenses per the city
+                
+                <button type="button" id="getBudgetPlan"> Get Budget Plan </button>
+                
+                <div id ="budgetPlan"></div>
+                
             </div>         
         </div>
     </div>

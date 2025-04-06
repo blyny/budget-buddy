@@ -60,8 +60,6 @@ onAuthStateChanged(auth, async (user) => {
             }
         }
 
-
-
         // -----------------------------------------------------------------------------------------------------
         // GET DATA FROM CATEGORIES ----------------------------------------------------------------------------
         const unsubgeneralPurchases = onSnapshot(doc(db, "users", uid, "Categories", "generalPurchases"), (doc) => {
@@ -272,13 +270,13 @@ onAuthStateChanged(auth, async (user) => {
         const btnAnalysis = document.getElementById("btnAnalysis");
         if (btnAnalysis) {
             btnAnalysis.addEventListener("click", () => {
-                window.location.href = "dashboard2.html";
+                window.location.href = "dashboard3.html";
             });
         }
         const btnBudgetPlan = document.getElementById("btnBudgetPlan");
         if (btnBudgetPlan) {
             btnBudgetPlan.addEventListener("click", () => {
-                window.location.href = "dashboard3.html";
+                window.location.href = "dashboard2.html";
             });
         }
         
