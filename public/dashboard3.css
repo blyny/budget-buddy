@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+ 
+:root {
+    --sidebar-width: 110px; /* Default sidebar width */
+}
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    font-family: "Atkinson Hyperlegible Mono", sans-serif;
+}
+body{
+    display: flex;   
+}  
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh; /* Full viewport height */
+    width: var(--sidebar-width);
+    padding: 0 1.7rem;
+    color: white;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    background-color: rgb(183, 98, 6);
+    z-index: 100;
+    box-sizing: border-box;
+}
+.sidebar:hover{  
+    --sidebar-width: 240px; 
+    width: var(--sidebar-width);  
+}
+.logo{ 
+    height:80px; 
+    padding:16px; 
+} 
+.menu{ 
+    height:88%; 
+    position:relative; 
+    list-style:none; 
+    padding:0;  
+} 
+.menu li { 
+    padding:1rem; 
+    margin:8px 0; 
+    border-radius:8px; 
+    transition:all 0.5s ease-in-out; 
+
+} 
+.menu li:hover, .active{ 
+    background:rgb(138, 72, 1); 
+    cursor:pointer;
+} 
+.menu a { 
+    color:white; 
+    font-size:14px; 
+    text-decoration:none; 
+    display:flex; 
+    align-items: center; 
+    gap: 1.5rem; 
+
+} 
+.menu a span{ 
+    overflow:hidden; 
+} 
+.menu a i { 
+    font-size:1.2rem; 
+
+} 
+.logout{ 
+    position:absolute; 
+    bottom:0; 
+    left:0; 
+    width: 100%;
+
+} 
+
+
+/*main body stuff*/  
+/*something needs to be fixed about the transition of the sidebar and the
+main content cause they over lap or dont change cause the overlap looks ok*/
+.main--content{ 
+    position: relative;
+    background: rgb(52, 52, 197);
+    width: 100%;
+    padding: 1rem;
+    margin-left: var(--sidebar-width); /* Use CSS variable for margin */
+    transition: margin-left 0.5s ease-in-out; /* Smooth transition */ 
+    z-index: 1;
+}  
+.header--wrapper img{ 
+    width:50px; 
+    height:50px; 
+    cursor:pointer; 
+    border-radius:50%; 
+} 
+.header--wrapper{ 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    flex-wrap:wrap; 
+    background:rgb(183, 98, 6);  
+    border-radius:10px; 
+    padding: 10px 2rem; 
+    margin-bottom:1rem;
+}
+.header--title{ 
+    color:white; 
+} 
+.user--info{ 
+    display:flex; 
+    align-items:center; 
+    gap:1rem; 
+} 
+.search--box{ 
+    background:rgb(237,237,237); 
+    border-radius:15px; 
+    color:rgba(113,99,186,255); 
+    display:flex; 
+    align-items:center; 
+    gap:10px; 
+    padding:4px 12px; 
+
+} 
+.search--box input{ 
+    background:transparent; 
+    padding:10px;
+} 
+.search--box i{ 
+    font-size:1.2rem; 
+    cursor:pointer; 
+    transition: all 0.5 ease-out;
+} 
+.search--box i:hover{ 
+    transform:scale(1.1); 
+
+
+} 
