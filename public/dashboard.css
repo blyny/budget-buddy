@@ -399,3 +399,53 @@ button:hover {
     background-color: #004080;
     /* Darker shade on hover */
 }
+
+/* Transaction History Styles */
+.transaction-history {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.transaction-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.transaction-history th {
+    background-color: navy;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.transaction-history td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.transaction-history tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.income {
+    color: green;
+    font-weight: bold;
+}
+
+.expense {
+    color: red;
+    font-weight: bold;
+}
+
+.negative-income {
+    color: darkred;
+    font-weight: bold;
+}
+
+.negative-expense {
+    color: darkgreen;
+    font-weight: bold;
+}

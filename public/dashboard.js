@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase-init.js";
 import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-import { doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { doc, setDoc, getDoc, addDoc, onSnapshot, collection, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 const username = localStorage.getItem("username");
 const welcomeMessage = document.getElementById("welcomeMessage");
@@ -17,6 +17,78 @@ onAuthStateChanged(auth, async (user) => {
         } else {
             welcomeMessage.textContent = "Welcome to Budget Buddy!";
         }
+
+        getTransactionHistory(uid, 10);
+        async function addTransaction(userId, amount, category, description, type, previousAmount = 0) {
+            try {
+                const difference = parseFloat(amount) - parseFloat(previousAmount);
+                await addDoc(collection(db, "users", userId, "transactions"), {
+                    amount: parseFloat(amount),
+                    previousAmount: parseFloat(previousAmount),
+                    difference: difference,
+                    category: category,
+                    description: description,
+                    date: new Date(),
+                    type: type
+                });
+                console.log("Transaction added successfully");
+            } catch (error) {
+                console.error("Error adding transaction: ", error);
+            }
+        }
+        // Get transaction history
+        function getTransactionHistory(userId, limitCount = 10) {
+            const q = query(
+                collection(db, "users", userId, "transactions"),
+                orderBy("date", "desc"),
+                limit(limitCount)
+            );
+            
+            return onSnapshot(q, (querySnapshot) => {
+                const transactions = [];
+                querySnapshot.forEach((doc) => {
+                    transactions.push({ id: doc.id, ...doc.data() });
+                });
+                displayTransactions(transactions);
+            });
+        }
+
+        function displayTransactions(transactions) {
+        const historyTable = document.getElementById('transactionHistory');
+        if (!historyTable) return;
+        
+        historyTable.innerHTML = `
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Change</th>
+                <th>New Total</th>
+            </tr>
+        `;
+        
+        transactions.forEach(transaction => {
+            const row = document.createElement('tr');
+            const date = new Date(transaction.date.seconds * 1000).toLocaleDateString();
+            const amountClass = transaction.difference >= 0 ? 
+                            (transaction.type === 'income' ? 'income' : 'expense') : 
+                            (transaction.type === 'income' ? 'negative-income' : 'negative-expense');
+            
+            const changeSymbol = transaction.difference >= 0 ? '+' : '';
+            const changeText = transaction.difference !== 0 ? 
+                            `${changeSymbol}${transaction.difference.toFixed(2)}` : 
+                            'No change';
+            
+            row.innerHTML = `
+                <td>${date}</td>
+                <td>${transaction.description}</td>
+                <td>${transaction.category}</td>
+                <td class="${amountClass}">${changeText}</td>
+                <td>$${transaction.amount.toFixed(2)}</td>
+            `;
+            historyTable.appendChild(row);
+        });
+    }
 
         // GET DATA FROM OVERVIEW ----------------------------------------------------------------------------
         const unsubcurrentAssets = onSnapshot(doc(db, "users", uid, "Overview", "currentAssets"), (doc) => {
@@ -114,7 +186,7 @@ onAuthStateChanged(auth, async (user) => {
 
         // -----------------------------------------------------------------------------------------------------
         // GET DATA FROM ACCOUNTS ------------------------------------------------------------------------------
-        const unsubChase = onSnapshot(doc(db, "users", uid, "Accounts", "Credit"), (doc) => {
+        const unsubCredit = onSnapshot(doc(db, "users", uid, "Accounts", "Credit"), (doc) => {
             console.log("Current data: ", doc.data());
             currentCredit.textContent = doc.data().Amount;
             const Credit = parseFloat(doc.data().Amount);
@@ -133,7 +205,6 @@ onAuthStateChanged(auth, async (user) => {
         if (addDatacurrentAssets) {
             currentAssets.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = currentAssets.value;
                     await setDoc(doc(db, "users", uid, "Overview", "currentAssets"), {
                         Amount: valueData,
@@ -148,7 +219,6 @@ onAuthStateChanged(auth, async (user) => {
         if (addDataExpenses) {
             Expenses.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = Expenses.value;
                     await setDoc(doc(db, "users", uid, "Overview", "Expenses"), {
                         Amount: valueData,
@@ -163,7 +233,6 @@ onAuthStateChanged(auth, async (user) => {
         if (addDataIncome) {
             Income.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = Income.value;
                     await setDoc(doc(db, "users", uid, "Overview", "Income"), {
                         Amount: valueData,
@@ -179,11 +248,23 @@ onAuthStateChanged(auth, async (user) => {
         if (addDatageneralPurchases) {
             generalPurchases.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = generalPurchases.value;
+                    const previousAmount = parseFloat(currentGeneralPurchases.textContent || 0);
+
                     await setDoc(doc(db, "users", uid, "Categories", "generalPurchases"), {
                         Amount: valueData,
                     });
+                    
+                    // Add transaction record
+                    await addTransaction(
+                        uid, 
+                        valueData, 
+                        "General Purchases", 
+                        "General purchase transaction", 
+                        "Expense",
+                        previousAmount
+                    );
+                    
                     alert("Data Successfully In!");
                     document.getElementById("generalPurchases").value = "";
                 }
@@ -194,11 +275,23 @@ onAuthStateChanged(auth, async (user) => {
         if (addDataTransportation) {
             Transportation.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = Transportation.value;
+                    const previousAmount = parseFloat(currentTransportation.textContent || 0);
+
                     await setDoc(doc(db, "users", uid, "Categories", "Transportation"), {
                         Amount: valueData,
                     });
+
+                    // Add transaction record
+                    await addTransaction(
+                        uid, 
+                        valueData, 
+                        "Transportation", 
+                        "Transportation Transaction", 
+                        "Expense",
+                        previousAmount
+                    );
+                    
                     alert("Data Successfully In!");
                     document.getElementById("Transportation").value = "";
                 }
@@ -209,11 +302,21 @@ onAuthStateChanged(auth, async (user) => {
         if (addDataFoodAndDrinks) {
             foodAndDrinks.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = foodAndDrinks.value;
+                    const previousAmount = parseFloat(currentFoodAndDrinks.textContent || 0);
+
                     await setDoc(doc(db, "users", uid, "Categories", "foodAndDrinks"), {
                         Amount: valueData,
                     });
+                    // Add transaction record
+                    await addTransaction(
+                        uid, 
+                        valueData, 
+                        "Food and Drinks",
+                        "Food and Drinks Transaction", 
+                        "Expense",
+                        previousAmount
+                    );
                     alert("Data Successfully In!");
                     document.getElementById("foodAndDrinks").value = "";
                 }
@@ -224,11 +327,20 @@ onAuthStateChanged(auth, async (user) => {
         if (addDataEntertainment) {
             Entertainment.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = Entertainment.value;
+                    const previousAmount = parseFloat(currentEntertainment.textContent || 0);
                     await setDoc(doc(db, "users", uid, "Categories", "Entertainment"), {
                         Amount: valueData,
                     });
+                    // Add transaction record
+                    await addTransaction(
+                        uid, 
+                        valueData, 
+                        "Entertainment",
+                        "Entertainment Transaction", 
+                        "Expense",
+                        previousAmount
+                    );
                     alert("Data Successfully In!");
                     document.getElementById("Entertainment").value = "";
                 }
@@ -240,7 +352,6 @@ onAuthStateChanged(auth, async (user) => {
         if (addDataChase) {
             Chase.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = Chase.value;
                     await setDoc(doc(db, "users", uid, "Accounts", "Credit"), {
                         Amount: valueData,
@@ -255,7 +366,6 @@ onAuthStateChanged(auth, async (user) => {
         if (addDataSavings) {
             Savings.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
-                    alert("Data Going Through!");
                     const valueData = Savings.value;
                     await setDoc(doc(db, "users", uid, "Accounts", "Savings"), {
                         Amount: valueData,
@@ -296,6 +406,8 @@ onAuthStateChanged(auth, async (user) => {
             });     
         }
         //----------------------------------------------------------------------------------------------------
+        
+        
   } else {
     // No user is signed in
     console.log("No user is logged in.");

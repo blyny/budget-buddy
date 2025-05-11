@@ -22,16 +22,16 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
-    width: var(--sidebar-width);
     height: 100vh;
+    /* Full viewport height */
+    width: var(--sidebar-width);
     padding: 0 1.7rem;
     color: white;
     overflow: hidden;
     transition: all 0.5s ease-in-out;
-    background-color: navy;
+    background-color: rgb(183, 98, 6);
     z-index: 100;
-    /* used to overlap the sidebar above the main content*/
+    box-sizing: border-box;
 }
 
 .sidebar:hover {
@@ -61,7 +61,7 @@ body {
 
 .menu li:hover,
 .active {
-    background: rgb(15, 89, 113);
+    background: rgb(138, 72, 1);
     cursor: pointer;
 }
 
@@ -98,7 +98,7 @@ body {
 main content cause they over lap or dont change cause the overlap looks ok*/
 .main--content {
     position: relative;
-    background: rgb(179, 169, 169);
+    background: rgb(52, 52, 197);
     width: 100%;
     padding: 1rem;
     margin-left: var(--sidebar-width);
@@ -120,7 +120,7 @@ main content cause they over lap or dont change cause the overlap looks ok*/
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    background: navy;
+    background: rgb(183, 98, 6);
     border-radius: 10px;
     padding: 10px 2rem;
     margin-bottom: 1rem;
