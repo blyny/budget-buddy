@@ -71,13 +71,13 @@ onAuthStateChanged(auth, async (user) => {
             const row = document.createElement('tr');
             const date = new Date(transaction.date.seconds * 1000).toLocaleDateString();
             const amountClass = transaction.difference >= 0 ? 
-                            (transaction.type === 'income' ? 'income' : 'expense') : 
-                            (transaction.type === 'income' ? 'negative-income' : 'negative-expense');
+                            (transaction.type === 'Income' ? 'Income' : 'expense') : 
+                            (transaction.type === 'Income' ? 'negative-income' : 'negative-expense');
             
             const changeSymbol = transaction.difference >= 0 ? '+' : '';
             const changeText = transaction.difference !== 0 ? 
                             `${changeSymbol}${transaction.difference.toFixed(2)}` : 
-                            'No change';
+                            'No Change';
             
             row.innerHTML = `
                 <td>${date}</td>
@@ -234,9 +234,20 @@ onAuthStateChanged(auth, async (user) => {
             Income.addEventListener("keydown", async (event) => {
                 if (event.key === "Enter") {
                     const valueData = Income.value;
+                    const previousAmount = parseFloat(currentIncome.textContent || 0);
+
                     await setDoc(doc(db, "users", uid, "Overview", "Income"), {
                         Amount: valueData,
                     });
+
+                    await addTransaction(
+                        uid, 
+                        valueData, 
+                        "Income", 
+                        "Income Transaction", 
+                        "Income",
+                        previousAmount
+                    );
                     alert("Data Successfully In!");
                     document.getElementById("Income").value = "";
                 }

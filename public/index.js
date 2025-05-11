@@ -52,9 +52,7 @@ const createEmailPassword = async () => {
       email: loginEmail,
       createdAt: new Date(),
     });
-    await setDoc(doc(db, "users", uid, "Overview", "currentAssets"), {
-      Amount: 0,
-    });
+
     console.log("User logged in:", user);
     document.getElementById("message").textContent = "Signed Up successfully!";
 

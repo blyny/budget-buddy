@@ -2,16 +2,13 @@ import { auth, db } from "./firebase-init.js";
 import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 import { collection, query, where, getDocs, orderBy, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-// Main function to run when the page loads
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         const uid = user.uid;
         console.log("User is logged in: " + uid);
         
-        // Load and display transaction analysis
         await loadTransactionAnalysis(uid);
         
-        // Set up logout functionality
         setupLogout();
     } else {
         console.log("No user is logged in.");
@@ -21,7 +18,6 @@ onAuthStateChanged(auth, async (user) => {
 
 async function loadTransactionAnalysis(uid) {
     try {
-        // Get transactions from the last 7 days
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
         
@@ -44,7 +40,6 @@ async function loadTransactionAnalysis(uid) {
             return;
         }
         
-        // Process transactions data
         const transactions = [];
         let totalIncome = 0;
         let totalExpenses = 0;
@@ -58,8 +53,7 @@ async function loadTransactionAnalysis(uid) {
                 totalIncome += parseFloat(data.amount);
             } else {
                 totalExpenses += parseFloat(data.amount);
-                
-                // Track spending by category
+
                 if (!categoryTotals[data.category]) {
                     categoryTotals[data.category] = 0;
                 }
@@ -67,14 +61,11 @@ async function loadTransactionAnalysis(uid) {
             }
         });
         
-        // Calculate net change
         const netChange = totalIncome - totalExpenses;
         
-        // Get current spending power from Overview
         const spendingPowerDoc = await getDoc(doc(db, "users", uid, "Overview", "spendingPower"));
         const currentSpendingPower = spendingPowerDoc.exists() ? parseFloat(spendingPowerDoc.data().Amount) : 0;
         
-        // Display the analysis
         displayAnalysisResults({
             totalIncome,
             totalExpenses,
@@ -98,7 +89,6 @@ async function loadTransactionAnalysis(uid) {
 function displayAnalysisResults(data) {
     const mainContent = document.querySelector('.main--content');
     
-    // Create summary cards
     const summaryHTML = `
         <div class="financial-summary">
             <div class="summary-card income">
@@ -129,10 +119,8 @@ function displayAnalysisResults(data) {
         </div>
     `;
     
-    // Create category breakdown
     let categoryHTML = '<div class="category-breakdown"><h3>Expense Categories</h3><ul>';
     
-    // Sort categories by amount (descending)
     const sortedCategories = Object.entries(data.categoryTotals)
         .sort((a, b) => b[1] - a[1]);
     
@@ -150,8 +138,7 @@ function displayAnalysisResults(data) {
     });
     
     categoryHTML += '</ul></div>';
-    
-    // Create recent transactions list
+
     let transactionsHTML = '<div class="recent-transactions"><h3>Recent Transactions</h3><table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead><tbody>';
     
     data.transactions.forEach(transaction => {
@@ -168,8 +155,7 @@ function displayAnalysisResults(data) {
     });
     
     transactionsHTML += '</tbody></table></div>';
-    
-    // Add all sections to the page
+
     mainContent.innerHTML += summaryHTML + categoryHTML + transactionsHTML;
 }
 

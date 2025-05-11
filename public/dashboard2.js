@@ -72,7 +72,7 @@ onAuthStateChanged(auth, async (user) => {
                 <div class="budget-section">
                     <h3>Savings (${percentage}%)</h3>
                     <ul class="budget-list">
-                        ${period} Savings: $${savings.toFixed(2)}
+                        Savings: $${savings.toFixed(2)}
                         <br>
                         Monthly Savings: $${(savings * (period === 'Weekly' ? 4 : 2)).toFixed(2)}
                     </ul>
@@ -85,24 +85,24 @@ onAuthStateChanged(auth, async (user) => {
                         Utilities/Internet (5%): $${(weekly * 0.05).toFixed(2)} <br>
                         Groceries (7%): $${(weekly * 0.07).toFixed(2)} <br>
                         Transportation (5%): $${(weekly * 0.05).toFixed(2)} <br>
-                        <li class="budget-total">Total ${period} Needs: $${weeklyNeeds.toFixed(2)}
+                        <li class="budget-total">Total Weekly Needs: $${weeklyNeeds.toFixed(2)}
                         <li class="budget-total">Total Monthly Needs: $${(weeklyNeeds * (period === 'Weekly' ? 4 : 2)).toFixed(2)}
                     </ul>
                 </div>
                 
                 <div class="budget-section">
-                    <h3>Discretionary Spending (${wantsPercent}%)</h3>
+                    <h3>Personal Spending (${wantsPercent}%)</h3>
                     <ul class="budget-list">
                         Entertainment: $${(weeklyWants * 0.5).toFixed(2)}<br>
                         Dining Out: $${(weeklyWants * 0.3).toFixed(2)}<br>
                         Other: $${(weeklyWants * 0.2).toFixed(2)}<br>
-                        <li class="budget-total">Total ${period} Wants: $${weeklyWants.toFixed(2)}</li>
+                        <li class="budget-total">Total Weekly Wants: $${weeklyWants.toFixed(2)}</li>
                         <li class="budget-total">Total Monthly Wants: $${(weeklyWants * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
                 
                 <div class="budget-tip">
-                    <strong>New York City Tips:</strong> Consider an unlimited MetroCard if you commute daily. 
+                    <strong>New York City Tips:</strong> Due to congestion pricing, you may want to look towards the MTA for transportation. 
                     Shop at Trader Joe's or Costco for affordable groceries. Look for housing in outer boroughs 
                     for better prices.
                 </div>
@@ -120,7 +120,7 @@ onAuthStateChanged(auth, async (user) => {
                 <div class="budget-section">
                     <h3>Savings (${percentage}%)</h3>
                     <ul class="budget-list">
-                        ${period} Savings: $${savings.toFixed(2)}<br>
+                        Savings: $${savings.toFixed(2)}<br>
                         Monthly Savings: $${(savings * (period === 'Weekly' ? 4 : 2)).toFixed(2)}
                     </ul>
                 </div>
@@ -132,18 +132,18 @@ onAuthStateChanged(auth, async (user) => {
                         Utilities/Internet (6%): $${(weekly * 0.06).toFixed(2)}<br>
                         Groceries (8%): $${(weekly * 0.08).toFixed(2)}<br>
                         Transportation (8%): $${(weekly * 0.08).toFixed(2)}<br>
-                        <li class="budget-total">Total ${period} Needs: $${weeklyNeeds.toFixed(2)}</li>
+                        <li class="budget-total">Total Weekly Needs: $${weeklyNeeds.toFixed(2)}</li>
                         <li class="budget-total">Total Monthly Needs: $${(weeklyNeeds * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
                 
                 <div class="budget-section">
-                    <h3>Discretionary Spending (${wantsPercent}%)</h3>
+                    <h3>Personal Spending (${wantsPercent}%)</h3>
                     <ul class="budget-list">
                         Entertainment: $${(weeklyWants * 0.5).toFixed(2)}<br>
                         Dining Out: $${(weeklyWants * 0.3).toFixed(2)}<br>
                         Other: $${(weeklyWants * 0.2).toFixed(2)}<br>
-                        <li class="budget-total">Total ${period} Wants: $${weeklyWants.toFixed(2)}</li>
+                        <li class="budget-total">Total Weekly Wants: $${weeklyWants.toFixed(2)}</li>
                         <li class="budget-total">Total Monthly Wants: $${(weeklyWants * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
@@ -167,7 +167,7 @@ onAuthStateChanged(auth, async (user) => {
                 <div class="budget-section">
                     <h3>Savings (${percentage}%)</h3>
                     <ul class="budget-list">
-                        ${period} Savings: $${savings.toFixed(2)}<br>
+                        Savings: $${savings.toFixed(2)}<br>
                         Monthly Savings: $${(savings * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
@@ -179,18 +179,18 @@ onAuthStateChanged(auth, async (user) => {
                         Utilities/Internet (6%): $${(weekly * 0.06).toFixed(2)}<br>
                         Groceries (7%): $${(weekly * 0.07).toFixed(2)}<br>
                         Transportation (7%): $${(weekly * 0.07).toFixed(2)}<br>
-                        <li class="budget-total">Total ${period} Needs: $${weeklyNeeds.toFixed(2)}</li>
+                        <li class="budget-total">Total Weekly Needs: $${weeklyNeeds.toFixed(2)}</li>
                         <li class="budget-total">Total Monthly Needs: $${(weeklyNeeds * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
                 
                 <div class="budget-section">
-                    <h3>Discretionary Spending (${wantsPercent}%)</h3>
+                    <h3>Personal Spending (${wantsPercent}%)</h3>
                     <ul class="budget-list">
                         Entertainment: $${(weeklyWants * 0.5).toFixed(2)}<br>
                         Dining Out: $${(weeklyWants * 0.3).toFixed(2)}<br>
                         Other: $${(weeklyWants * 0.2).toFixed(2)}<br>
-                        <li class="budget-total">Total ${period} Wants: $${weeklyWants.toFixed(2)}</li>
+                        <li class="budget-total">Total Weekly Wants: $${weeklyWants.toFixed(2)}</li>
                         <li class="budget-total">Total Monthly Wants: $${(weeklyWants * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
@@ -214,7 +214,7 @@ onAuthStateChanged(auth, async (user) => {
                 <div class="budget-section">
                     <h3>Savings (${percentage}%)</h3>
                     <ul class="budget-list">
-                        ${period} Savings: $${savings.toFixed(2)}<br>
+                        Savings: $${savings.toFixed(2)}<br>
                         Monthly Savings: $${(savings * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
@@ -226,18 +226,18 @@ onAuthStateChanged(auth, async (user) => {
                         Utilities/Internet (7%): $${(weekly * 0.07).toFixed(2)}<br>
                         Groceries (8%): $${(weekly * 0.08).toFixed(2)}<br>
                         Transportation (13%): $${(weekly * 0.13).toFixed(2)}<br>
-                        <li class="budget-total">Total ${period} Needs: $${weeklyNeeds.toFixed(2)}</li>
+                        <li class="budget-total">Total Weekly Needs: $${weeklyNeeds.toFixed(2)}</li>
                         <li class="budget-total">Total Monthly Needs: $${(weeklyNeeds * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
                 
                 <div class="budget-section">
-                    <h3>Discretionary Spending (${wantsPercent}%)</h3>
+                    <h3>Personal Spending (${wantsPercent}%)</h3>
                     <ul class="budget-list">
                         Entertainment: $${(weeklyWants * 0.5).toFixed(2)}<br>
                         Dining Out: $${(weeklyWants * 0.3).toFixed(2)}<br>
                         Other: $${(weeklyWants * 0.2).toFixed(2)}<br>
-                        <li class="budget-total">Total ${period} Wants: $${weeklyWants.toFixed(2)}</li>
+                        <li class="budget-total">Total Weekly Wants: $${weeklyWants.toFixed(2)}</li>
                         <li class="budget-total">Total Monthly Wants: $${(weeklyWants * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
                     </ul>
                 </div>
@@ -250,7 +250,6 @@ onAuthStateChanged(auth, async (user) => {
             `;
         }
 
-        // Helper function to get budget percentages
         function getBudgetPercentages(percentage) {
             switch(percentage) {
                 case "30":
