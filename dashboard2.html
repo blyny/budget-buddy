@@ -46,6 +46,7 @@
             <div class="header--title">
                 <span></span>
                 <h2>Budget Plan</h2>
+                <p>Create and manage your personalized budget</p>
             </div>
             <div class="user--info">
                 <div class="search--box">
@@ -57,44 +58,52 @@
         </div>
         <div>
             <div class="mainBody">
-                <div class="currentIncome">
-                    Income: <span class="symbol">$</span>
-                    <span id="currentIncome"></span>
+                <div class="financial-overview">
+                    <div class="currentIncome">
+                        <strong>Income:</strong> <span class="symbol">$</span>
+                        <span id="currentIncome"></span>
+                    </div>
+                
+                    <div class="currentSpendingPower">
+                        <strong>Available Spending Power:</strong> <span class="symbol">$</span>
+                        <span id="currentSpendingPower"></span>
+                    </div>
+                </div>
+                <div class="budget-settings">
+                        Income Frequency:
+                        <input type="radio" id="Weekly" name="period" value="Weekly">
+                        <label for="Weekly">Weekly</label>
+                        <input type="radio" id="Biweekly" name="period" value="Biweekly">
+                        <label for="Biweekly">Biweekly</label>  
+                    
+
+                <div class="form-group">
+                    <label for="percentage">Percentage of Income to Save:</label>
+                    <select id="percentage" name="percentage" class="form-control">
+                        <option value="30" selected>30%</option>
+                        <option value="40">40%</option>
+                        <option value="50">50%</option>
+                        <option value="50">60%</option>
+                    </select>
                 </div>
 
-                <div class="currentSpendingPower">
-                    Spending Power: <span class="symbol">$</span>
-                    <span id="currentSpendingPower"></span>
+                <div class="form-group">
+                    <label for="city">Current City:</label>
+                    <select id="city" name="city" class="form-control">
+                        <option value="New York City">New York City</option>
+                        <option value="Chicago">Chicago</option>
+                        <option value="Los Angeles">Los Angeles</option>
+                        <option value="Houston">Houston</option>
+                    </select>
                 </div>
-
-                Income Frequency:
-                <input type="radio" id="Weekly" name="period" value="Weekly">
-                <label for="weekly">Weekly</label>
-                <input type="radio" id="Biweekly" name="period" value="Biweekly">
-                <label for="Biweekly">Biweekly</label>
-                <br>
-
+                </div>
+                We recommend checking out the 30% plan first! <br>
+                It is a good baseline and can be adjusted to your needs.
+                <br><br>
                 
-                % of Income to Save
-                <select id="percentage" name="percentage">
-                    <option value="20">20%</option>
-                    <option value="30">30%</option>
-                    <option value="40">40%</option>
-                    <option value="50">50%</option>
-                    <option value="60">60%</option>
-                </select> <br>
-                
-                What is your Current City?
-                <select id="city" name="city">
-                    <option value="New York City">New York City</option>
-                    <option value="Chicago">Chicago</option>
-                    <option value="Los Angeles">Los Angeles</option>
-                    <option value="Houston">Houston</option>
-                    <option value="Phoenix">Phoenix</option>
-                </select> <br>
-                
-                <button type="button" id="getBudgetPlan"> Get Budget Plan </button>
-                
+                <button type="button" id="getBudgetPlan" class="btn-primary">
+                    <i class="fas fa-calculator"></i> Get Budget Plan
+                </button>
                 <div id ="budgetPlan"></div>
                 
             </div>         
