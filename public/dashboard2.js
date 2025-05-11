@@ -18,963 +18,253 @@ onAuthStateChanged(auth, async (user) => {
             
             const selectedPercentage = percentageSelect.value;
             const selectedCity = citySelect.value;
-                
-            console.log("Selected Period:", periodSelect);
-            console.log("Selected Percentage:", selectedPercentage);
-            console.log("Selected City:", selectedCity);
+            const income = parseFloat(currentIncome.textContent || 0);
+            
+            // Calculate weekly and monthly amounts
+            const weeklyAmount = income;
+            const monthlyAmount = periodSelect === 'Weekly' ? income * 4 : income * 2;
+            
+            // Generate the budget plan content based on city
+            let budgetContent = `
+                <div class="budget-header">
+                    <h2>Your Personalized Budget Plan</h2>
+                    <p>For ${selectedCity} - ${periodSelect} Income: $${income.toFixed(2)}</p>
+                </div>
+            `;
 
-            //------------------------------------------------------------------------------------------------------------------------------------------------------------
-            if (selectedCity === "New York City") {
-                const budgetPlanDiv = document.getElementById("budgetPlan");
-                switch(selectedPercentage) {
-                    case "30":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>30% is a good starting point for a basic budget. We will use the 50/20/30 method! <br>
-                            30% savings, 50% for needs, 20% for wants. 
-                            Anything less than 30% would result in minimal savings</p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 30% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-
-                                <p><em>Tip:</em> Consider a high-yield savings account (like Marcus or Ally) to combat inflation, and to make interest</p>
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 50% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4>
-                                <ul>
-                                    <li><strong>Housing (30% max):</strong> $${((currentIncome.textContent) * (30 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Super high-speed internet is not needed)</li>
-                                    <li><strong>Groceries (7%):</strong> $${((currentIncome.textContent) * (7 / 100)).toFixed(2)} (Shop at Trader Joe's or Costco in bulk)</li>
-                                    <li><strong>Transportation (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Assuming MTA and you spend $35/week)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 20% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (20 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (20 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "40":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>40% is a valid starting point for a basic budget. We modify the 50/20/30 method! <br>
-                            40% savings, 50% for needs, 10% for wants. </p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 40% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 50% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (30% max):</strong> $${((currentIncome.textContent) * (30 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Super high-speed internet is not needed)</li>
-                                    <li><strong>Groceries (7%):</strong> $${((currentIncome.textContent) * (7 / 100)).toFixed(2)} (Shop at Trader Joe's or Costco in bulk)</li>
-                                    <li><strong>Transportation (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Assuming MTA and you spend $35/week)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 10% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (10 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (10 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "50":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>50% is very aggressive but possible if you have a high income and willing to be frugal. <br>
-                            Our breakdown would be: 50% savings, 45% needs, 5% wants. </p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 50% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 45% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (45 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (45 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (45 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (45 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (25%):</strong>  $${((currentIncome.textContent) * 0.25).toFixed(2)}</li>
-                                    <li><strong>Utilities/Internet (5%):</strong>  $${((currentIncome.textContent) * 0.05).toFixed(2)}</li>
-                                    <li><strong>Groceries (6%):</strong>  $${((currentIncome.textContent) * 0.06).toFixed(2)}</li>
-                                    <li><strong>Transportation (4%):</strong>  $${((currentIncome.textContent) * 0.04).toFixed(2)}</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 5% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (5 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (5 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "60":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>60% is very risky and very aggressive, requiring serious spending awareness and patience. <br>
-                            We do not recommend unless you are wealth-building and can live with the minimal necessities</p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 60% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 35% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (23% max):</strong> $${((currentIncome.textContent) * (23/ 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Focus on utilities and Very Cheap Internet)</li>
-                                    <li><strong>Groceries (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Shop Very Frugally)</li>
-                                    <li><strong>Transportation (2%):</strong> $${((currentIncome.textContent) * (2 / 100)).toFixed(2)} (Prioritize Walking)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 5% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (10 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (10 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                }
-            } else if (selectedCity === "Los Angeles") {
-                const budgetPlanDiv = document.getElementById("budgetPlan");
-                switch (selectedPercentage) {
-                    case "30":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>30% is a good starting point for a basic budget. We will use the 50/20/30 method! <br>
-                            30% savings, 50% for needs, 20% for wants. 
-                            Anything less than 30% would result in minimal savings</p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 30% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-
-                                <h3>Expenses:</h3>
-                                Allocate 50% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4>
-                                <ul>
-                                    <li><strong>Housing (30% max):</strong> $${((currentIncome.textContent) * (30 / 100)).toFixed(2)} (Rent is high in LA, consider renting with others)</li>
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} </li>
-                                    <li><strong>Groceries (8%):</strong> $${((currentIncome.textContent) * (8 / 100)).toFixed(2)} (Shop at Vallarta or Costco in bulk)</li>
-                                    <li><strong>Transportation (7%):</strong> $${((currentIncome.textContent) * (7 / 100)).toFixed(2)} (Use Metro if nearby)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 20% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (20 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (20 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "40":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>40% is a valid starting point for a basic budget. We modify the 50/20/30 method! <br>
-                            40% savings, 50% for needs, 10% for wants. </p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 40% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 50% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (28% max):</strong> $${((currentIncome.textContent) * (28 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} </li>
-                                    <li><strong>Groceries (7%):</strong> $${((currentIncome.textContent) * (7 / 100)).toFixed(2)} </li>
-                                    <li><strong>Transportation (7%):</strong> $${((currentIncome.textContent) * (7 / 100)).toFixed(2)} </li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 10% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (10 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (10 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "50":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>50% is very aggressive but possible if you have a high income and willing to be frugal. <br>
-                            Our breakdown would be: 50% savings, 45% needs, 5% wants. </p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 50% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 45% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (45 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (45 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (45 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (45 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (25%):</strong>  $${((currentIncome.textContent) * 0.25).toFixed(2)}</li>
-                                    <li><strong>Utilities/Internet (4%):</strong>  $${((currentIncome.textContent) * 0.04).toFixed(2)}</li>
-                                    <li><strong>Groceries (6%):</strong>  $${((currentIncome.textContent) * 0.06).toFixed(2)}</li>
-                                    <li><strong>Transportation (3%):</strong>  $${((currentIncome.textContent) * 0.03).toFixed(2)}</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 5% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (5 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (5 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "60":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>60% is very risky and very aggressive, requiring serious spending awareness and patience. <br>
-                            We do not recommend unless you are wealth-building and can live with the minimal necessities</p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 60% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 35% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (20% max):</strong> $${((currentIncome.textContent) * (23 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (3%):</strong> $${((currentIncome.textContent) * (3 / 100)).toFixed(2)} (Focus on utilities and Very Cheap Internet)</li>
-                                    <li><strong>Groceries (4%):</strong> $${((currentIncome.textContent) * (4 / 100)).toFixed(2)} (Shop Very Frugally)</li>
-                                    <li><strong>Transportation (2%):</strong> $${((currentIncome.textContent) * (2 / 100)).toFixed(2)} (Prioritize Walking)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 5% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (10 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (10 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                }
-            } else if (selectedCity === "Chicago") {
-                const budgetPlanDiv = document.getElementById("budgetPlan");
-                switch (selectedPercentage) {
-                    case "30":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>30% is a good starting point for a basic budget. We will use the 50/20/30 method! <br>
-                            30% savings, 50% for needs, 20% for wants. 
-                            Anything less than 30% would result in minimal savings</p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 30% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-
-                                <p><em>Tip:</em> Consider a high-yield savings account (like Marcus or Ally) to combat inflation, and to make interest</p>
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 50% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4>
-                                <ul>
-                                    <li><strong>Housing (30% max):</strong> $${((currentIncome.textContent) * (30 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Super high-speed internet is not needed)</li>
-                                    <li><strong>Groceries (7%):</strong> $${((currentIncome.textContent) * (7 / 100)).toFixed(2)} (Shop at Shop at Aldi/Jewel-Osco)</li>
-                                    <li><strong>Transportation (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (CTA Pass)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 20% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (20 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (20 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "40":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>40% is a valid starting point for a basic budget. We modify the 50/20/30 method! <br>
-                            40% savings, 50% for needs, 10% for wants. </p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 40% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 50% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (30% max):</strong> $${((currentIncome.textContent) * (30 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} 
-                                    <li><strong>Groceries (7%):</strong> $${((currentIncome.textContent) * (7 / 100)).toFixed(2)} 
-                                    <li><strong>Transportation (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} 
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 10% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (10 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (10 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "50":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>50% is very aggressive but possible if you have a high income and willing to be frugal. <br>
-                            Our breakdown would be: 50% savings, 45% needs, 5% wants. </p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 50% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 45% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (45 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (45 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (45 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (45 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (25%):</strong>  $${((currentIncome.textContent) * 0.25).toFixed(2)}</li>
-                                    <li><strong>Utilities/Internet (5%):</strong>  $${((currentIncome.textContent) * 0.05).toFixed(2)}</li>
-                                    <li><strong>Groceries (6%):</strong>  $${((currentIncome.textContent) * 0.06).toFixed(2)}</li>
-                                    <li><strong>Transportation (4%):</strong>  $${((currentIncome.textContent) * 0.04).toFixed(2)}</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 5% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (5 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (5 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "60":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>60% is very risky and very aggressive, requiring serious spending awareness and patience. <br>
-                            We do not recommend unless you are wealth-building and can live with the minimal necessities</p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 60% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 35% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (23% max):</strong> $${((currentIncome.textContent) * (23 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Focus on utilities and Very Cheap Internet)</li>
-                                    <li><strong>Groceries (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Shop Very Frugally)</li>
-                                    <li><strong>Transportation (2%):</strong> $${((currentIncome.textContent) * (2 / 100)).toFixed(2)} (Prioritize Walking)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 5% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (10 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (10 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                }
-            } else if (selectedCity === "Houston") {
-                const budgetPlanDiv = document.getElementById("budgetPlan");
-                switch (selectedPercentage) {
-                    case "30":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>30% is a good starting point for a basic budget. We will use the 50/20/30 method! <br>
-                            30% savings, 50% for needs, 20% for wants. 
-                            Anything less than 30% would result in minimal savings</p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 30% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-
-                                <p><em>Tip:</em> Consider a high-yield savings account (like Marcus or Ally) to combat inflation, and to make interest</p>
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 50% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4>
-                                <ul>
-                                    <li><strong>Housing (25% max):</strong> $${((currentIncome.textContent) * (25 / 100)).toFixed(2)} (We can spend less due to no state income tax)
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}  </li>
-                                    <li><strong>Groceries (8%):</strong> $${((currentIncome.textContent) * (8 / 100)).toFixed(2)} (H-E-B/Costco runs)</li>
-                                    <li><strong>Transportation (12%):</strong> $${((currentIncome.textContent) * (12 / 100)).toFixed(2)} (Gas Money)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 20% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (20 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (20 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "40":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>40% is a valid starting point for a basic budget. We modify the 50/20/30 method! <br>
-                            40% savings, 50% for needs, 10% for wants. </p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 40% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 50% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (20% max):</strong> $${((currentIncome.textContent) * (20 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (4%):</strong> $${((currentIncome.textContent) * (4 / 100)).toFixed(2)} </li>
-                                    <li><strong>Groceries (7%):</strong> $${((currentIncome.textContent) * (7 / 100)).toFixed(2)} </li>
-                                    <li><strong>Transportation (10%):</strong> $${((currentIncome.textContent) * (10 / 100)).toFixed(2)} </li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 10% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (10 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (10 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "50":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>50% is very aggressive but possible if you have a high income and willing to be frugal. <br>
-                            Our breakdown would be: 50% savings, 45% needs, 5% wants. </p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 50% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 45% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (45 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (45 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (45 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (45 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (25%):</strong>  $${((currentIncome.textContent) * 0.25).toFixed(2)}</li>
-                                    <li><strong>Utilities/Internet (5%):</strong>  $${((currentIncome.textContent) * 0.05).toFixed(2)}</li>
-                                    <li><strong>Groceries (5%):</strong>  $${((currentIncome.textContent) * 0.05).toFixed(2)}</li>
-                                    <li><strong>Transportation (8%):</strong>  $${((currentIncome.textContent) * 0.08).toFixed(2)}</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 5% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (5 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (5 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (5 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                    case "60":
-                        budgetPlanDiv.innerHTML = `
-                            <p><strong>Income Frequency:</strong> ${periodSelect}</p>
-                            <p><strong>Savings Percentage:</strong> ${selectedPercentage}%</p>
-                            <p><strong>City:</strong> ${selectedCity}</p>
-
-                            <h2>Your Plan:</h2>
-                            <p>60% is very risky and very aggressive, requiring serious spending awareness and patience. <br>
-                            We do not recommend unless you are wealth-building and can live with the minimal necessities</p>
-                            <ul>
-                                <h3>Savings:</h3>
-                                Set aside 60% of your income:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 4) * (selectedPercentage / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Savings: $${((currentIncome.textContent) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                    <li>Monthly Savings: $${((currentIncome.textContent * 2) * (selectedPercentage / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-
-                                <h3>Expenses:</h3>
-                                Allocate 35% of your income for needs:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (50 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (50 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (50 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                                <br>
-                                <h4>Example Needs Breakdown:</h4> 
-                                <ul>
-                                    <li><strong>Housing (23% max):</strong> $${((currentIncome.textContent) * (23 / 100)).toFixed(2)}
-                                    <li><strong>Utilities/Internet (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Focus on utilities and Very Cheap Internet)</li>
-                                    <li><strong>Groceries (5%):</strong> $${((currentIncome.textContent) * (5 / 100)).toFixed(2)} (Shop Very Frugally)</li>
-                                    <li><strong>Transportation (2%):</strong> $${((currentIncome.textContent) * (2 / 100)).toFixed(2)} (Prioritize Walking)</li>
-                                </ul>
-                                <br>
-
-                                <h3>Spending Power:</h3>
-                                Give yourself 5% of your income for fun stuff:
-                                ${periodSelect === 'Weekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 4) * (10 / 100)).toFixed(2)} (estimated)</li>
-                                ` : ''}
-                                
-                                ${periodSelect === 'Biweekly' ? `
-                                    <li>Weekly Expenses: $${((currentIncome.textContent) * (10 / 100)).toFixed(2)}</li>
-                                    <li>Monthly Expenses: $${((currentIncome.textContent * 2) * (10 / 100)).toFixed(2)}</li>
-                                ` : ''}
-                        `;
-                        break;
-                }
+            // Add city-specific content
+            switch(selectedCity) {
+                case "New York City":
+                    budgetContent += generateNYCPlan(selectedPercentage, weeklyAmount, monthlyAmount, periodSelect);
+                    break;
+                case "Los Angeles":
+                    budgetContent += generateLAPlan(selectedPercentage, weeklyAmount, monthlyAmount, periodSelect);
+                    break;
+                case "Chicago":
+                    budgetContent += generateChicagoPlan(selectedPercentage, weeklyAmount, monthlyAmount, periodSelect);
+                    break;
+                case "Houston":
+                    budgetContent += generateHoustonPlan(selectedPercentage, weeklyAmount, monthlyAmount, periodSelect);
+                    break;
+                default:
+                    budgetContent += generateDefaultPlan(selectedPercentage, weeklyAmount, monthlyAmount, periodSelect);
             }
-            
-     
 
-            // Take income, take the percentage and put aside that money
-            // Then calculate MTA costs and gas costs (Seperate but give both options)
-            // Then do perctangess for food, groceries, and rent (most important things)
-            // Take the remaining and allocate for fun stuff and spending money
-            // Return something from a high level starting from the week and the month
-            // Weekly you will spend 35 on the MTA or 20 on gas, 100 on foot
-            // Monthly you need to pay rent which is ... etc etc
+            // Open modal
+            const modal = document.getElementById('budgetModal');
+            const modalContent = document.getElementById('budgetPlanContent');
+            modalContent.innerHTML = budgetContent;
+            modal.style.display = "block";
 
+            // Close handlers
+            document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
+            window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; };
         }
+
+        // New York City Plan
+        function generateNYCPlan(percentage, weekly, period) {
+            const { needsPercent, wantsPercent } = getBudgetPercentages(percentage);
+            const savings = weekly * percentage/100;
+            const weeklyNeeds = weekly * needsPercent/100;
+            const weeklyWants = weekly * wantsPercent/100;
             
+            return `
+                <div class="budget-section">
+                    <h3>Savings (${percentage}%)</h3>
+                    <ul class="budget-list">
+                        ${period} Savings: $${savings.toFixed(2)}
+                        <br>
+                        Monthly Savings: $${(savings * (period === 'Weekly' ? 4 : 2)).toFixed(2)}
+                    </ul>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>Essential Expenses (${needsPercent}%)</h3>
+                    <ul class="budget-list">
+                        Housing (30%): $${(weekly * 0.30).toFixed(2)} <br>
+                        Utilities/Internet (5%): $${(weekly * 0.05).toFixed(2)} <br>
+                        Groceries (7%): $${(weekly * 0.07).toFixed(2)} <br>
+                        Transportation (5%): $${(weekly * 0.05).toFixed(2)} <br>
+                        <li class="budget-total">Total ${period} Needs: $${weeklyNeeds.toFixed(2)}
+                        <li class="budget-total">Total Monthly Needs: $${(weeklyNeeds * (period === 'Weekly' ? 4 : 2)).toFixed(2)}
+                    </ul>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>Discretionary Spending (${wantsPercent}%)</h3>
+                    <ul class="budget-list">
+                        Entertainment: $${(weeklyWants * 0.5).toFixed(2)}<br>
+                        Dining Out: $${(weeklyWants * 0.3).toFixed(2)}<br>
+                        Other: $${(weeklyWants * 0.2).toFixed(2)}<br>
+                        <li class="budget-total">Total ${period} Wants: $${weeklyWants.toFixed(2)}</li>
+                        <li class="budget-total">Total Monthly Wants: $${(weeklyWants * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-tip">
+                    <strong>New York City Tips:</strong> Consider an unlimited MetroCard if you commute daily. 
+                    Shop at Trader Joe's or Costco for affordable groceries. Look for housing in outer boroughs 
+                    for better prices.
+                </div>
+            `;
+        }
+
+        // Los Angeles Plan
+        function generateLAPlan(percentage, weekly, period) {
+            const { needsPercent, wantsPercent } = getBudgetPercentages(percentage);
+            const savings = weekly * percentage/100;
+            const weeklyNeeds = weekly * needsPercent/100;
+            const weeklyWants = weekly * wantsPercent/100;
+            
+            return `
+                <div class="budget-section">
+                    <h3>Savings (${percentage}%)</h3>
+                    <ul class="budget-list">
+                        ${period} Savings: $${savings.toFixed(2)}<br>
+                        Monthly Savings: $${(savings * (period === 'Weekly' ? 4 : 2)).toFixed(2)}
+                    </ul>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>Essential Expenses (${needsPercent}%)</h3>
+                    <ul class="budget-list">
+                        Housing (28%): $${(weekly * 0.28).toFixed(2)}<br>
+                        Utilities/Internet (6%): $${(weekly * 0.06).toFixed(2)}<br>
+                        Groceries (8%): $${(weekly * 0.08).toFixed(2)}<br>
+                        Transportation (8%): $${(weekly * 0.08).toFixed(2)}<br>
+                        <li class="budget-total">Total ${period} Needs: $${weeklyNeeds.toFixed(2)}</li>
+                        <li class="budget-total">Total Monthly Needs: $${(weeklyNeeds * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>Discretionary Spending (${wantsPercent}%)</h3>
+                    <ul class="budget-list">
+                        Entertainment: $${(weeklyWants * 0.5).toFixed(2)}<br>
+                        Dining Out: $${(weeklyWants * 0.3).toFixed(2)}<br>
+                        Other: $${(weeklyWants * 0.2).toFixed(2)}<br>
+                        <li class="budget-total">Total ${period} Wants: $${weeklyWants.toFixed(2)}</li>
+                        <li class="budget-total">Total Monthly Wants: $${(weeklyWants * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-tip">
+                    <strong>Los Angeles Tips:</strong> Carpooling can significantly reduce transportation costs. 
+                    Shop at Vallarta or local farmers markets for affordable groceries. Consider living near 
+                    Metro lines to reduce driving.
+                </div>
+            `;
+        }
+
+        // Chicago Plan
+        function generateChicagoPlan(percentage, weekly, period) {
+            const { needsPercent, wantsPercent } = getBudgetPercentages(percentage);
+            const savings = weekly * percentage/100;
+            const weeklyNeeds = weekly * needsPercent/100;
+            const weeklyWants = weekly * wantsPercent/100;
+            
+            return `
+                <div class="budget-section">
+                    <h3>Savings (${percentage}%)</h3>
+                    <ul class="budget-list">
+                        ${period} Savings: $${savings.toFixed(2)}<br>
+                        Monthly Savings: $${(savings * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>Essential Expenses (${needsPercent}%)</h3>
+                    <ul class="budget-list">
+                        Housing (25%): $${(weekly * 0.25).toFixed(2)}<br>
+                        Utilities/Internet (6%): $${(weekly * 0.06).toFixed(2)}<br>
+                        Groceries (7%): $${(weekly * 0.07).toFixed(2)}<br>
+                        Transportation (7%): $${(weekly * 0.07).toFixed(2)}<br>
+                        <li class="budget-total">Total ${period} Needs: $${weeklyNeeds.toFixed(2)}</li>
+                        <li class="budget-total">Total Monthly Needs: $${(weeklyNeeds * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>Discretionary Spending (${wantsPercent}%)</h3>
+                    <ul class="budget-list">
+                        Entertainment: $${(weeklyWants * 0.5).toFixed(2)}<br>
+                        Dining Out: $${(weeklyWants * 0.3).toFixed(2)}<br>
+                        Other: $${(weeklyWants * 0.2).toFixed(2)}<br>
+                        <li class="budget-total">Total ${period} Wants: $${weeklyWants.toFixed(2)}</li>
+                        <li class="budget-total">Total Monthly Wants: $${(weeklyWants * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-tip">
+                    <strong>Chicago Tips:</strong> Take advantage of the CTA system to save on transportation. 
+                    Shop at Aldi or Jewel-Osco for affordable groceries. Consider neighborhoods near L train 
+                    lines for good transit access.
+                </div>
+            `;
+        }
+
+        // Houston Plan
+        function generateHoustonPlan(percentage, weekly, period) {
+            const { needsPercent, wantsPercent } = getBudgetPercentages(percentage);
+            const savings = weekly * percentage/100;
+            const weeklyNeeds = weekly * needsPercent/100;
+            const weeklyWants = weekly * wantsPercent/100;
+            
+            return `
+                <div class="budget-section">
+                    <h3>Savings (${percentage}%)</h3>
+                    <ul class="budget-list">
+                        ${period} Savings: $${savings.toFixed(2)}<br>
+                        Monthly Savings: $${(savings * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>Essential Expenses (${needsPercent}%)</h3>
+                    <ul class="budget-list">
+                        Housing (22%): $${(weekly * 0.22).toFixed(2)}<br>
+                        Utilities/Internet (7%): $${(weekly * 0.07).toFixed(2)}<br>
+                        Groceries (8%): $${(weekly * 0.08).toFixed(2)}<br>
+                        Transportation (13%): $${(weekly * 0.13).toFixed(2)}<br>
+                        <li class="budget-total">Total ${period} Needs: $${weeklyNeeds.toFixed(2)}</li>
+                        <li class="budget-total">Total Monthly Needs: $${(weeklyNeeds * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>Discretionary Spending (${wantsPercent}%)</h3>
+                    <ul class="budget-list">
+                        Entertainment: $${(weeklyWants * 0.5).toFixed(2)}<br>
+                        Dining Out: $${(weeklyWants * 0.3).toFixed(2)}<br>
+                        Other: $${(weeklyWants * 0.2).toFixed(2)}<br>
+                        <li class="budget-total">Total ${period} Wants: $${weeklyWants.toFixed(2)}</li>
+                        <li class="budget-total">Total Monthly Wants: $${(weeklyWants * (period === 'Weekly' ? 4 : 2)).toFixed(2)}</li>
+                    </ul>
+                </div>
+                
+                <div class="budget-tip">
+                    <strong>Houston Tips:</strong> Take advantage of no state income tax to boost savings. 
+                    Shop at H-E-B or Costco for best grocery prices. Consider living outside downtown for 
+                    more affordable housing options.
+                </div>
+            `;
+        }
+
+        // Helper function to get budget percentages
+        function getBudgetPercentages(percentage) {
+            switch(percentage) {
+                case "30":
+                    return { needsPercent: 50, wantsPercent: 20 };
+                case "40":
+                    return { needsPercent: 50, wantsPercent: 10 };
+                case "50":
+                    return { needsPercent: 45, wantsPercent: 5 };
+                case "60":
+                    return { needsPercent: 35, wantsPercent: 5 };
+                default:
+                    return { needsPercent: 50, wantsPercent: 20 };
+            }
+        }
 
         if (document.getElementById("getBudgetPlan")) {
             document.getElementById("getBudgetPlan").addEventListener("click", getBudgetPlan);
